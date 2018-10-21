@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "tap-list",
-    "description": "This project is really great.",
+    "description": "tap list swiper.",
     "slug": "tap-list",
     "privacy": "public",
     "sdkVersion": "30.0.0",
