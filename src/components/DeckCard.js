@@ -4,6 +4,9 @@ import { Card, Button } from 'react-native-elements';
 
 const DeckCard = props => {
   const { item } = props;
+  const { container } = styles;
+
+
   return (
     <Card
       key={item.id}
@@ -21,5 +24,11 @@ const DeckCard = props => {
     </Card>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  }
+})
 
 export default DeckCard;

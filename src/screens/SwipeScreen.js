@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import SwipeContainer from './components/SwipeContainer';
+import SwipeContainer from './../components/SwipeContainer';
 
-import TAP_LIST_DATA from './data/tapListData';
+import TAP_LIST_DATA from './../data/tapListData';
 
 
 class Main extends Component {

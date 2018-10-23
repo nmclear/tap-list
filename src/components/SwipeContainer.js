@@ -32,8 +32,10 @@ class SwipeContainer extends Component {
 
     render(){
         const { data, onSwipeRight, onSwipeLeft } = this.props;
+        const { container } = styles;
+
         return (
-            <View style={styles.container}>
+            <View style={container}>
                 <Deck 
                     data={data}
                     renderCard={this.renderCard}
