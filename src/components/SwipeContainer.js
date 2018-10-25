@@ -22,7 +22,7 @@ class SwipeContainer extends Component {
                 text='No more beers to see!'
                 noBtnText='Restart'
                 yesBtnText='View Tap List'
-                onNoPress={() => Actions.reset('swipe')}
+                onNoPress={() => {}}
                 onYesPress={() => this.viewTapList(likes)}
             />
         )

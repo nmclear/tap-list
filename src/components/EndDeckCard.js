@@ -8,14 +8,7 @@ const EndDeckCard = props => {
   return (
     <Card title={title}>
       <Text style={textStyle}>{text}</Text>
-
       <View style={buttonGroup}>
-        <Button
-          backgroundColor="#03A9F4"
-          title={noBtnText}
-          onPress={onNoPress}
-          buttonStyle={buttonStyle}
-        />
         <Button
           backgroundColor="#03A9F4"
           title={yesBtnText}
