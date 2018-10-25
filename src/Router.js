@@ -16,21 +16,21 @@ const RouterComponent = () => {
       <Scene key="root" hideNavBar>
         <Scene key="main">
           <Scene
-              initial
-              key="home"
-              component={HomeScreen}
-              title="Tap List"
+            initial
+            key="home"
+            component={HomeScreen}
+            title="Tap List"
           />
           <Scene
-              key="swipe"
-              component={SwipeScreen}
-              title="Choose Your Brews"
-              renderBackButton={() => <BackBtn color="white" size={25} bgColor="#54C571" />}
+            key="swipe"
+            component={SwipeScreen}
+            title="Choose Your Brews"
+            renderBackButton={() => <BackBtn color="white" size={25} bgColor="#54C571" />}
           />
           <Scene
-              key="taplist"
-              component={TapListScreen}
-              title="My Tap List"
+            key="taplist"
+            component={TapListScreen}
+            title="My Tap List"
           />
         </Scene>
       </Scene>

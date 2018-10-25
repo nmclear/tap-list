@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
+import SwipeHeader from './../components/SwipeHeader';
 import SwipeContainer from './../components/SwipeContainer';
+import TapListCounter from './../components/TapListCounter';
 
 import TAP_LIST_DATA from './../data/tapListData';
 
 
-class Main extends Component {
+class SwipeScreen extends Component {
 
   state = {
     data: TAP_LIST_DATA,
     liked: [],
-    disliked: []
+    disliked: [],
+    likeCount: 0,
   }
 
   handleLiked = item => {
@@ -19,6 +22,7 @@ class Main extends Component {
     this.setState({
       liked: [...liked, item]
     })
+    this.addLikeCount();
   }
 
   handleDisliked = item => {
@@ -28,16 +32,29 @@ class Main extends Component {
     })
   }
 
+  addLikeCount = () => {
+    const {likeCount} = this.state;
+    this.setState({
+      likeCount: likeCount + 1
+    })
+  }
+
   render() {
-    const { data, liked, disliked } = this.state;
+    const { data, liked, disliked, likeCount } = this.state;
+    const { container } = styles;
+
     return (
-      <SwipeContainer
-        data={data}
-        onSwipeRight={this.handleLiked}
-        onSwipeLeft={this.handleDisliked}
-        likes={liked}
-        dislikes={disliked}
-      />
+      <View style={container}>
+        <SwipeHeader />
+        <SwipeContainer
+          data={data}
+          onSwipeRight={this.handleLiked}
+          onSwipeLeft={this.handleDisliked}
+          likes={liked}
+          dislikes={disliked}
+        />
+        <TapListCounter count={likeCount}/>
+      </View>
     );
   }
 }
@@ -45,10 +62,11 @@ class Main extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    // flexDirection: 'column',
+    backgroundColor: '#f5f5f5',
     // alignItems: 'center',
-    // justifyContent: 'center',
+    // justifyContent: 'space-evenly',
   },
 });
 
-export default Main;
+export default SwipeScreen;

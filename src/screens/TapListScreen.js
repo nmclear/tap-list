@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     flex: 1,
     justifyContent: 'space-between',
+    backgroundColor: '#f5f5f5',
   },
   buttonContainer: {
     width: '100%',

@@ -20,7 +20,7 @@ class SwipeContainer extends Component {
             <EndDeckCard 
                 title='Completed'
                 text='No more beers to see!'
-                btnText='View Tap List'
+                btnText='View Your Tap List'
                 onPress={() => this.viewTapList(likes)}
             />
         )
@@ -50,8 +50,8 @@ class SwipeContainer extends Component {
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      backgroundColor: '#fff',
+      flex: 4,
+    //   backgroundColor: '#fff',
     //   justifyContent: 'center',
     },
   });

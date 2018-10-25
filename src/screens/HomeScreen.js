@@ -17,7 +17,7 @@ const HomeScreen = () => {
                 rounded
                 backgroundColor='#1589FF'
                 onPress={() => Actions.swipe()}
-                rightIcon={{name: 'code'}}
+                rightIcon={{name: 'beer', type: 'material-community'}}
                 title='Build your Tap List'
             />
         </View>
@@ -30,7 +30,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         paddingTop: 10,
-        paddingBottom: 10
+        paddingBottom: 10,
+        backgroundColor: '#f5f5f5',
     }
 });
 

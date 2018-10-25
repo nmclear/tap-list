@@ -2,23 +2,28 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Card, Button, Avatar } from 'react-native-elements';
 
-const MiniCard = props => {
-  const { item } = props;
-  const { container, text } = styles;
+const MiniCard = ({ item }) => {
+  const { id, uri, name, brewery } = item;
+  const { container, textContainer, title, subtitle } = styles;
 
 
   return (
 
-    <View key={item.id} flexDirection="row" style={container}>
+    <View key={id} flexDirection="row" style={container}>
         <Avatar
             large
             rounded
-            source={{uri: item.uri}}
+            source={{uri: uri}}
             activeOpacity={0.7}
         />
-        <Text style={text}>
-            {item.text}
-        </Text>
+        <View style={textContainer}>
+          <Text style={title}>
+              {name}
+          </Text>
+          <Text style={subtitle}>
+              {brewery}
+          </Text>
+        </View>
     </View>
   )
 }
@@ -33,10 +38,16 @@ const styles = StyleSheet.create({
     paddingBottom: 7,
     paddingLeft: 7,
     backgroundColor: 'white'
-    // paddingRight: 15
   },
-  text: {
-      paddingLeft: 15
+  textContainer: {
+    flexDirection: 'column',
+    paddingLeft: 15
+  },
+  title: {
+    fontSize: 20,
+  },
+  subtitle: {
+    fontSize: 14
   }
 })
 

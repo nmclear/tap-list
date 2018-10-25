@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { 
-    StyleSheet, View, Animated, PanResponder, Dimensions,
+    StyleSheet, View, Animated, PanResponder, Dimensions, LayoutAnimation, UIManager
 } from 'react-native';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -35,6 +35,15 @@ class Deck extends Component {
         });
 
         this.state = { currentIndex: 0 };
+    }
+
+    componentDidUpdate(prevProps) {
+        if(prevProps.data !== this.props.data) {
+            this.setState({ index: 0 });
+        }
+
+        UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
+        LayoutAnimation.spring();
     }
 
     onSwipeComplete = direction => {
@@ -98,7 +107,7 @@ class Deck extends Component {
             }
 
             return (
-                <Animated.View key={item.id} style={[cardStyle]}>
+                <Animated.View key={item.id} style={[cardStyle, { top: 3 * (index - currentIndex) }]}>
                     {renderCard(item)}
                 </Animated.View>
             )

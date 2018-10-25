@@ -1,25 +1,32 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { Card, Button } from 'react-native-elements';
+import { Card, Button, Rating } from 'react-native-elements';
 
-const DeckCard = props => {
-  const { item } = props;
-  const { container } = styles;
+const DeckCard = ({item}) => {
+  const { id, name, brewery, uri, description, rating } = item;
+  const {
+    container, ratingStyle, textStyle, titleStyle, subtitleStyle
+  } = styles;
 
 
   return (
     <Card
-      key={item.id}
-      title={item.text}
-      image={{ uri: item.uri }}
+      key={id}
+      featuredTitle={name}
+      featuredTitleStyle={titleStyle}
+      featuredSubtitle={brewery}
+      featuredSubtitleStyle={subtitleStyle}
+      image={{ uri: uri }}
+      containerStyle={container}
     >
-      <Text style={{ textAlign: 'center', marginBottom: 10 }}>
-        Yes or No
+      <Text style={textStyle}>
+        {description}
       </Text>
-      <Button 
-        icon={{ name: 'code' }}
-        backgroundColor="#03A9F4"
-        title="View Now"
+      <Rating
+        readonly
+        imageSize={25}
+        startingValue={rating}
+        style={ratingStyle}
       />
     </Card>
   )
@@ -27,8 +34,23 @@ const DeckCard = props => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-  }
+    minHeight: 350
+  },
+  titleStyle: {
+    fontSize: 25,
+  },
+  subtitleStyle: {
+    fontSize: 20,
+  },
+  textStyle: {
+    textAlign: 'center',
+    marginTop: 20,
+    marginBottom: 10
+  },
+  ratingStyle: {
+    alignItems: 'center',
+    marginTop: 15,
+  },
 })
 
 export default DeckCard;
