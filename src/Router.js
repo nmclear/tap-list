@@ -22,15 +22,16 @@ const RouterComponent = () => {
             title="Tap List"
           />
           <Scene
+            initial
             key="swipe"
             component={SwipeScreen}
-            title="Choose Your Brews"
-            renderBackButton={() => <BackBtn color="white" size={25} bgColor="#54C571" />}
+            title="Fill Your Tap List"
           />
           <Scene
             key="taplist"
             component={TapListScreen}
             title="My Tap List"
+            renderBackButton={() => <BackBtn color="white" size={25} bgColor="#54C571" />}
           />
         </Scene>
       </Scene>

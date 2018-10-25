@@ -28,7 +28,7 @@ class TapListScreen extends Component {
             title='Reset'
             icon={{name: 'home'}}
             backgroundColor='#1589FF'
-            onPress={() => Actions.reset('home')}
+            onPress={() => Actions.reset('swipe')}
             containerViewStyle={buttonContainer}
           />
         </View>

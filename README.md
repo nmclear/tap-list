@@ -28,6 +28,9 @@ Swipe Right your favorite beers and create a *"tap list"* to track your next bre
 * Add database to save user's tap list.
 * Utilize GraphQL
 * Integrate AWS Lambda for serverless backend.
+* Expand amount of beers to review.
+* Improve animations.
+* Add a loading/landing screen.
 
 ## Author
 * Nick Clear

@@ -18,10 +18,12 @@ class SwipeContainer extends Component {
         const { likes } = this.props;
         return (
             <EndDeckCard 
-                title='Completed'
+                title='Empty Pint...'
                 text='No more beers to see!'
-                btnText='View Your Tap List'
-                onPress={() => this.viewTapList(likes)}
+                noBtnText='Restart'
+                yesBtnText='View Tap List'
+                onNoPress={() => Actions.reset('swipe')}
+                onYesPress={() => this.viewTapList(likes)}
             />
         )
     }
@@ -51,8 +53,6 @@ class SwipeContainer extends Component {
 const styles = StyleSheet.create({
     container: {
       flex: 4,
-    //   backgroundColor: '#fff',
-    //   justifyContent: 'center',
     },
   });
 
