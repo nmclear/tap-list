@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { Card, Button, Avatar } from 'react-native-elements';
+import { Avatar } from 'react-native-elements';
 
 const MiniCard = ({ item }) => {
   const { id, uri, name, brewery } = item;

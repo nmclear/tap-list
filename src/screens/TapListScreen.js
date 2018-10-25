@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
 import { Actions } from 'react-native-router-flux';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
-import ListItem from './../components/ListItem';
-import DeckCard from './../components/DeckCard';
+import { View, StyleSheet, FlatList } from 'react-native';
 import MiniCard from './../components/MiniCard';
 import { Button } from 'react-native-elements';
 
 class TapListScreen extends Component {
   state = {};
 
-//   renderItem = beer => <ListItem item={beer} />;
     renderItem = beer => <MiniCard item={beer.item} />;
 
   render() {

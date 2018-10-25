@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { Card, Button, Rating } from 'react-native-elements';
+import { StyleSheet, Text } from 'react-native';
+import { Card, Rating } from 'react-native-elements';
 
 const DeckCard = ({item}) => {
   const { id, name, brewery, uri, description, rating } = item;

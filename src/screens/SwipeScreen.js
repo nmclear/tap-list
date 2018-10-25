@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import SwipeHeader from './../components/SwipeHeader';
 import SwipeContainer from './../components/SwipeContainer';
@@ -62,10 +62,7 @@ class SwipeScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // flexDirection: 'column',
     backgroundColor: '#f5f5f5',
-    // alignItems: 'center',
-    // justifyContent: 'space-evenly',
   },
 });
 

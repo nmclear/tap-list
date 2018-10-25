@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { material } from 'react-native-typography'
 
 const TapListCounter = ({ count }) => {
     const { container, text } = styles;
