@@ -11,10 +11,8 @@ Swipe Right your favorite beers and create a *"tap list"* to track your next bre
 * Once the users go through the card deck, the user is presented with their updated tap list.
 
 ## App Screenshots
-* ![demo_home_screen](https://user-images.githubusercontent.com/36515376/47538257-4a12ea80-d87f-11e8-864c-606519ce7ef2.png)
-* ![demo_swipe_right](https://user-images.githubusercontent.com/36515376/47538293-6f9ff400-d87f-11e8-9043-3e4037b06b5b.png)
-* ![demo_swipe_left](https://user-images.githubusercontent.com/36515376/47538325-91997680-d87f-11e8-8af7-15dca63ea42d.png)
-* ![demo_tap_list](https://user-images.githubusercontent.com/36515376/47538342-a4ac4680-d87f-11e8-8a9f-49ea778cccc4.png)
+* ![demo_home_screen](https://user-images.githubusercontent.com/36515376/47538257-4a12ea80-d87f-11e8-864c-606519ce7ef2.png) ![demo_swipe_right](https://user-images.githubusercontent.com/36515376/47538293-6f9ff400-d87f-11e8-9043-3e4037b06b5b.png)
+* ![demo_swipe_left](https://user-images.githubusercontent.com/36515376/47538325-91997680-d87f-11e8-8af7-15dca63ea42d.png) ![demo_tap_list](https://user-images.githubusercontent.com/36515376/47538342-a4ac4680-d87f-11e8-8a9f-49ea778cccc4.png)
 
 ## Usage
 * https://expo.io/@nmclear/tap-list
