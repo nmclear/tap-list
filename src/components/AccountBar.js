@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Actions } from 'react-native-router-flux';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Icon } from 'react-native-elements';
 
 class AccountBar extends Component {
     constructor(props){
         super(props)
-
+        // update active code once redux added.
         this.state = { active: Actions.currentScene };
     }
 
@@ -14,7 +14,7 @@ class AccountBar extends Component {
         const { active } = this.state;
         if(active !== 'swipe'){
             this.setState({active: 'swipe'})
-            Actions.swipe()
+            Actions.reset('swipe')
         }
     }
 
@@ -34,16 +34,13 @@ class AccountBar extends Component {
                 <TouchableOpacity style={tabStyle} onPress={() => this.viewSwipe()}>
                     <View style={active === 'swipe' ? activeStyle: ''}>
                         <Icon
-                            // containerStyle={active === 'swipe' ? activeStyle: ''}
                             name='home'
-                            // onPress={() => this.viewSwipe()}
                         />
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity style={tabStyle} onPress={() => this.viewTapList()}>
                     <View style={active === 'taplist' ? activeStyle : ''}>
                         <Icon
-                            // containerStyle={active === 'taplist' ? activeStyle : ''}
                             name='beer'
                             type='material-community'
                         />
@@ -51,10 +48,9 @@ class AccountBar extends Component {
                 </TouchableOpacity>
                 <TouchableOpacity style={tabStyle}>
                     <View style={active === 'account' ? activeStyle : ''}>
-                    <Icon
-                        // containerStyle={active === 'account' ? activeStyle : ''}
-                        name='account-circle'
-                    />
+                        <Icon
+                            name='account-circle'
+                        />
                     </View>
                 </TouchableOpacity>
 
@@ -74,14 +70,12 @@ const styles = StyleSheet.create({
     tabStyle: {
         flex: 1,
         flexDirection: 'row',
-        alignItems: 'center',
         justifyContent: 'center',
         borderRightColor: '#C8C8C8',
         borderStyle: 'solid',
         borderRightWidth: 1
     },
     activeStyle: {
-        // width: '30%',
         borderBottomColor: 'black',
         borderStyle: 'solid',
         borderBottomWidth: 2,

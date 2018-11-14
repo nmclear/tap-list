@@ -7,7 +7,7 @@ import MiniCard from './../components/MiniCard';
 class TapListScreen extends Component {
   state = {};
 
-    renderItem = beer => <MiniCard item={beer.item} />;
+    renderItem = beer => <MiniCard item={beer.item} onPress={() => Actions.beer({beer: beer.item})}/>;
 
   render() {
     const { taplist } = this.props;

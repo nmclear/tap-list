@@ -1,15 +1,16 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 import { Avatar } from 'react-native-elements';
 
-const MiniCard = ({ item }) => {
+const MiniCard = ({ item, onPress }) => {
   const { id, uri, name, brewery } = item;
   const { container, textContainer, title, subtitle } = styles;
 
 
   return (
 
-    <View key={id} flexDirection="row" style={container}>
+    <TouchableOpacity key={id} style={container} onPress={onPress}>
         <Avatar
             large
             rounded
@@ -24,13 +25,14 @@ const MiniCard = ({ item }) => {
               {brewery}
           </Text>
         </View>
-    </View>
+    </TouchableOpacity>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection:"row",
     alignItems: 'center',
     justifyContent: 'flex-start',
     marginTop: 8,

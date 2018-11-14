@@ -8,6 +8,7 @@ import AccountBar from './components/AccountBar';
 import HomeScreen from './screens/HomeScreen';
 import SwipeScreen from './screens/SwipeScreen';
 import TapListScreen from './screens/TapListScreen';
+import BeerScreen from './screens/BeerScreen';
 
 const RouterComponent = () => {
   const { container, navBarStyle, titleStyle } = styles;
@@ -34,6 +35,12 @@ const RouterComponent = () => {
             key="taplist"
             component={TapListScreen}
             title="My Tap List"
+            renderBackButton={() => <BackBtn color="white" size={25} bgColor="#54C571" />}
+          />
+          <Scene
+            key="beer"
+            component={BeerScreen}
+            title="Beer Name"
             renderBackButton={() => <BackBtn color="white" size={25} bgColor="#54C571" />}
           />
         </Scene>

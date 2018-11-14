@@ -1,11 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text } from 'react-native';
-import { Card, Rating } from 'react-native-elements';
+import { Card } from 'react-native-elements';
+import BeerRating from './BeerRating';
 
 const DeckCard = ({item}) => {
-  const { id, name, brewery, uri, description, rating } = item;
+  const { id, name, genre, brewery, uri, description, rating } = item;
   const {
-    container, ratingStyle, textStyle, titleStyle, subtitleStyle
+    container, textStyle, titleStyle, subtitleStyle, genreStyle
   } = styles;
 
 
@@ -19,22 +20,18 @@ const DeckCard = ({item}) => {
       image={{ uri: uri }}
       containerStyle={container}
     >
+      <Text style={genreStyle}>{genre}</Text>
       <Text style={textStyle}>
         {description}
       </Text>
-      <Rating
-        readonly
-        imageSize={25}
-        startingValue={rating}
-        style={ratingStyle}
-      />
+      <BeerRating rating={rating} style={{ marginTop: 15 }} />
     </Card>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    minHeight: 350
+    minHeight: 350,
   },
   titleStyle: {
     fontSize: 25,
@@ -44,13 +41,14 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     textAlign: 'center',
-    marginTop: 20,
     marginBottom: 10
   },
-  ratingStyle: {
-    alignItems: 'center',
-    marginTop: 15,
-  },
+  genreStyle: {
+    textAlign: 'center',
+    marginBottom: 10,
+    fontSize: 16,
+    fontWeight: '600',
+  }
 })
 
 export default DeckCard;

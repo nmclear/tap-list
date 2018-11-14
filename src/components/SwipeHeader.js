@@ -12,9 +12,9 @@ const SwipeHeader = () => {
                 SWIPE RIGHT FOR A CHEERS
             </Text>
             <View style={arrowContainer}>
-                <Icon name='arrow-back' color='#D9DFDF' />
+                <Icon name='arrow-back' color='#404040' />
                 <Text style={arrowText}> SWIPE </Text>
-                <Icon name='arrow-forward' color='#D9DFDF' />
+                <Icon name='arrow-forward' color='#404040' />
             </View>
         </View>
     )
@@ -25,7 +25,8 @@ const styles = StyleSheet.create({
         // flex: 1,
         height: 100,
         justifyContent: 'center',
-        backgroundColor: '#21C293',
+        // backgroundColor: '#21C293',
+        backgroundColor: '#E0E0E0'
     },
     arrowContainer: {
         flexDirection: 'row',
@@ -35,13 +36,13 @@ const styles = StyleSheet.create({
     },
     header: {
         textAlign: 'center',
-        color: 'white',
+        color: '#404040',
         fontSize: 16,
         letterSpacing: 1,
     },
     arrowText: {
         fontSize: 25,
-        color: 'white'
+        color: '#303030'
     }
 });
 
