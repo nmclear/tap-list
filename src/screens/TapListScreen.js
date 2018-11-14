@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Actions } from 'react-native-router-flux';
 import { View, StyleSheet, FlatList } from 'react-native';
-import MiniCard from './../components/MiniCard';
 import { Button } from 'react-native-elements';
+import MiniCard from './../components/MiniCard';
 
 class TapListScreen extends Component {
   state = {};

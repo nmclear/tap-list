@@ -1,19 +1,22 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
-import { Scene, Router } from 'react-native-router-flux';
+import { StyleSheet, View } from 'react-native';
+import { Scene, Router, Actions } from 'react-native-router-flux';
 
 import BackBtn from './components/BackBtn';
+import AccountBar from './components/AccountBar';
 
 import HomeScreen from './screens/HomeScreen';
 import SwipeScreen from './screens/SwipeScreen';
 import TapListScreen from './screens/TapListScreen';
 
 const RouterComponent = () => {
-  const { navBarStyle, titleStyle } = styles;
-
+  const { container, navBarStyle, titleStyle } = styles;
   return (
+    <View style={container}>
+    
+    
     <Router navigationBarStyle={navBarStyle} titleStyle={titleStyle} navBarButtonColor="white">
-      <Scene key="root" hideNavBar>
+    <Scene key="root" hideNavBar>
         <Scene key="main">
           <Scene
             initial
@@ -36,12 +39,20 @@ const RouterComponent = () => {
         </Scene>
       </Scene>
     </Router>
+    <AccountBar />
+    </View>
   )
 };
 
 const styles = StyleSheet.create({
+  container: {
+    padding: 0,
+    flex: 1,
+    flexDirection: 'column'
+  },
   navBarStyle: {
-    backgroundColor: '#616D7E',
+    // backgroundColor: '#616D7E',
+    backgroundColor: 'black',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.2,

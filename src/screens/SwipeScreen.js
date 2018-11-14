@@ -42,7 +42,6 @@ class SwipeScreen extends Component {
   render() {
     const { data, liked, disliked, likeCount } = this.state;
     const { container } = styles;
-
     return (
       <View style={container}>
         <SwipeHeader />
