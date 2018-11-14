@@ -5,13 +5,17 @@ import { Button } from 'react-native-elements';
 import MiniCard from './../components/MiniCard';
 
 class TapListScreen extends Component {
-  state = {};
 
-    renderItem = beer => <MiniCard item={beer.item} onPress={() => Actions.beer({beer: beer.item})}/>;
+    renderItem = beer => (
+      <MiniCard
+        item={beer.item}
+        onPress={() => Actions.beer({beer: beer.item})}
+      />
+    );
 
   render() {
     const { taplist } = this.props;
-    const { container, buttonContainer, button } = styles;
+    const { container, buttonContainer } = styles;
     return (
         <View style={container}>
           <FlatList
@@ -21,10 +25,9 @@ class TapListScreen extends Component {
           />
         
           <Button
-            large
             title='Reset'
             icon={{name: 'home'}}
-            backgroundColor='#1589FF'
+            backgroundColor='black'
             onPress={() => Actions.reset('swipe')}
             containerViewStyle={buttonContainer}
           />
@@ -45,8 +48,6 @@ const styles = StyleSheet.create({
     width: '100%',
     marginLeft: 0,
     padding: 0
-  },
-  button: {
   }
 });
 

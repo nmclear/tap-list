@@ -18,11 +18,11 @@ class SwipeContainer extends Component {
         const { likes } = this.props;
         return (
             <EndDeckCard 
-                title='Empty Pint...'
-                text='No more beers to see!'
-                noBtnText='Restart'
+                title='Tapped Keg...'
+                text='No more beers to taste!'
+                noBtnText='More Pints'
                 yesBtnText='View Tap List'
-                onNoPress={() => {}}
+                onNoPress={() => Actions.reset('swipe')}
                 onYesPress={() => this.viewTapList(likes)}
             />
         )

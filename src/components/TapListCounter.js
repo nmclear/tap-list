@@ -13,7 +13,7 @@ const TapListCounter = ({ count }) => {
 const styles = StyleSheet.create({
     container: {
         height: 70,
-        backgroundColor: '#3399ff',
+        backgroundColor: 'black',
     },
     text: {
         fontSize: 22,

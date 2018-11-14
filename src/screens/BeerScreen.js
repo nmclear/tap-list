@@ -33,7 +33,7 @@ class BeerScreen extends Component {
                     color='white'
                     disabled={link ? false: true}
                     backgroundColor='black'
-                    buttonStyle={{marginBottom: 10}}
+                    buttonStyle={{marginBottom: 5, marginTop: 5 }}
                     accessibilityLabel={`Learn more about ${name}`}
                 />
             </View>

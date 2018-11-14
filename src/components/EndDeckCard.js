@@ -10,13 +10,13 @@ const EndDeckCard = props => {
       <Text style={textStyle}>{text}</Text>
       <View style={buttonGroup}>
         <Button
-          backgroundColor="#03A9F4"
-          title='More Brews'
-          onPress={onYesPress}
+          backgroundColor="black"
+          title={noBtnText}
+          onPress={onNoPress}
           buttonStyle={buttonStyle}
         />
         <Button
-          backgroundColor="#03A9F4"
+          backgroundColor="black"
           title={yesBtnText}
           onPress={onYesPress}
           buttonStyle={buttonStyle}

@@ -7,14 +7,15 @@ class AccountBar extends Component {
     constructor(props){
         super(props)
         // update active code once redux added.
-        this.state = { active: Actions.currentScene };
+        this.state = {active: 'swipe'}
     }
 
     viewSwipe = () => {
         const { active } = this.state;
         if(active !== 'swipe'){
             this.setState({active: 'swipe'})
-            Actions.reset('swipe')
+            // Actions.reset('swipe')
+            Actions.swipe();
         }
     }
 
@@ -27,33 +28,39 @@ class AccountBar extends Component {
     }
 
     render(){
-        const { container, tabStyle, activeStyle } = styles;
+        const { container, tabStyle, activeStyle, tabContainerStyle } = styles;
         let { active } = this.state;
+
         return (
             <View style={container}>
-                <TouchableOpacity style={tabStyle} onPress={() => this.viewSwipe()}>
-                    <View style={active === 'swipe' ? activeStyle: ''}>
-                        <Icon
-                            name='home'
-                        />
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity style={tabStyle} onPress={() => this.viewTapList()}>
-                    <View style={active === 'taplist' ? activeStyle : ''}>
-                        <Icon
-                            name='beer'
-                            type='material-community'
-                        />
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity style={tabStyle}>
-                    <View style={active === 'account' ? activeStyle : ''}>
-                        <Icon
-                            name='account-circle'
-                        />
-                    </View>
-                </TouchableOpacity>
-
+                <View style={tabContainerStyle}>
+                    <TouchableOpacity style={tabStyle} onPress={() => this.viewSwipe()}>
+                        <View style={active === 'swipe' ? activeStyle: ''}>
+                            <Icon
+                                name='home'
+                            />
+                        </View>
+                    </TouchableOpacity>
+                </View>
+                <View style={tabContainerStyle}>
+                    <TouchableOpacity style={tabStyle} onPress={() => this.viewTapList()}>
+                        <View style={active === 'taplist' ? activeStyle : ''}>
+                            <Icon
+                                name='beer'
+                                type='material-community'
+                            />
+                        </View>
+                    </TouchableOpacity>
+                </View>
+                <View style={tabContainerStyle}>
+                    <TouchableOpacity style={tabStyle}>
+                        <View style={active === 'account' ? activeStyle : ''}>
+                            <Icon
+                                name='account-circle'
+                            />
+                        </View>
+                    </TouchableOpacity>
+                </View>
             </View>
         )
     }
@@ -71,6 +78,10 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'center',
+    },
+    tabContainerStyle: {
+        flex: 1,
+        flexDirection: 'row',
         borderRightColor: '#C8C8C8',
         borderStyle: 'solid',
         borderRightWidth: 1
