@@ -1,58 +1,34 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { StyleSheet, View } from 'react-native';
 
-import SwipeHeader from './../components/SwipeHeader';
-import SwipeContainer from './../components/SwipeContainer';
-import TapListCounter from './../components/TapListCounter';
+import { likedBeer, dislikedBeer, fetchBeerData } from '../redux/actions';
 
-import TAP_LIST_DATA from './../data/tapListData';
-
+import SwipeHeader from '../components/SwipeHeader';
+import SwipeContainer from '../components/SwipeContainer';
+import TapListCounter from '../components/TapListCounter';
 
 class SwipeScreen extends Component {
+  handleLiked = (item) => {
+    this.props.likedBeer(item);
+  };
 
-  state = {
-    data: TAP_LIST_DATA,
-    liked: [],
-    disliked: [],
-    likeCount: 0,
-  }
-
-  handleLiked = item => {
-    const { liked } = this.state;
-    this.setState({
-      liked: [...liked, item]
-    })
-    this.addLikeCount();
-  }
-
-  handleDisliked = item => {
-    const { disliked } = this.state;
-    this.setState({
-      disliked: [...disliked, item]
-    })
-  }
-
-  addLikeCount = () => {
-    const {likeCount} = this.state;
-    this.setState({
-      likeCount: likeCount + 1
-    })
-  }
+  handleDisliked = (item) => {
+    this.props.dislikedBeer(item);
+  };
 
   render() {
-    const { data, liked, disliked, likeCount } = this.state;
+    const { beerData, taplist } = this.props;
     const { container } = styles;
     return (
       <View style={container}>
         <SwipeHeader />
         <SwipeContainer
-          data={data}
+          data={beerData}
           onSwipeRight={this.handleLiked}
           onSwipeLeft={this.handleDisliked}
-          likes={liked}
-          dislikes={disliked}
         />
-        <TapListCounter count={likeCount}/>
+        <TapListCounter count={taplist.length || 0} />
       </View>
     );
   }
@@ -65,4 +41,12 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SwipeScreen;
+const mapStateToProps = ({ beerlist }) => {
+  const { beerData, taplist } = beerlist;
+  return { beerData, taplist };
+};
+
+export default connect(
+  mapStateToProps,
+  { likedBeer, dislikedBeer, fetchBeerData },
+)(SwipeScreen);

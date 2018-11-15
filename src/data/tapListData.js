@@ -2,6 +2,7 @@ export default [
 
     {
         id: 1,
+        viewed: false,
         name: 'Two Hearted Ale',
         genre: 'India Pale Ale',
         brewery: `Bell's Brewery`,
@@ -13,6 +14,7 @@ export default [
     },
     {
         id: 2,
+        viewed: false,
         name: 'All Day IPA',
         genre: 'Session IPA',
         brewery: `Founders Brewing Co.`,
@@ -24,6 +26,7 @@ export default [
     },
     {
         id: 3,
+        viewed: false,
         name: 'Patsy Coconut Stout',
         genre: 'Coconut Rye Stout',
         brewery: `Barley Forge Brewing Co.`,
@@ -35,6 +38,7 @@ export default [
     },
     {
         id: 4,
+        viewed: false,
         name: 'Aunt Sally Sour',
         genre: 'Sour Ale',
         brewery: `Lagunitas Brewing Co.`,
@@ -46,6 +50,7 @@ export default [
     },
     {
         id: 5,
+        viewed: false,
         name: 'CEO Stout',
         genre: 'Coffee Stout',
         brewery: `Right Brain Brewery`,

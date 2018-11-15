@@ -1,6 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { StyleSheet, View } from 'react-native';
 import { Scene, Router, Actions } from 'react-native-router-flux';
+
+import { sceneChange } from './redux/actions';
 
 import BackBtn from './components/BackBtn';
 
@@ -9,11 +12,11 @@ import SwipeScreen from './screens/SwipeScreen';
 import TapListScreen from './screens/TapListScreen';
 import BeerScreen from './screens/BeerScreen';
 
-const RouterComponent = () => {
+const RouterComponent = (props) => {
   const { navBarStyle, titleStyle } = styles;
   return (
     <Router navigationBarStyle={navBarStyle} titleStyle={titleStyle} navBarButtonColor="white">
-    <Scene key="root" hideNavBar>
+      <Scene key="root" hideNavBar>
         <Scene key="main">
           <Scene
             // initial
@@ -24,25 +27,29 @@ const RouterComponent = () => {
           <Scene
             initial
             key="swipe"
+            left={() => null}
             component={SwipeScreen}
-            title="Fill Your Tap List"
+            title="DESIGN YOUR TAP LIST"
+            on={() => props.sceneChange('swipe')}
           />
           <Scene
             key="taplist"
             component={TapListScreen}
-            title="My Tap List"
+            title="MY TAP LIST"
             renderBackButton={() => <BackBtn color="white" size={25} bgColor="#54C571" />}
+            on={() => props.sceneChange('taplist')}
           />
           <Scene
             key="beer"
             component={BeerScreen}
-            title="Beer Name"
+            title="ABOUT THE BEER"
             renderBackButton={() => <BackBtn color="white" size={25} bgColor="#54C571" />}
+            on={() => props.sceneChange('beer')}
           />
         </Scene>
       </Scene>
     </Router>
-  )
+  );
 };
 
 const styles = StyleSheet.create({
@@ -56,8 +63,12 @@ const styles = StyleSheet.create({
   },
   titleStyle: {
     color: 'white',
-    fontSize: 20,
+    fontSize: 16,
+    letterSpacing: 2,
   },
 });
 
-export default RouterComponent;
+export default connect(
+  null,
+  { sceneChange },
+)(RouterComponent);

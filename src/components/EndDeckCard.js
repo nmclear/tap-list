@@ -2,8 +2,10 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Card, Button } from 'react-native-elements';
 
-const EndDeckCard = props => {
-  const { title, text, yesBtnText, noBtnText, onYesPress, onNoPress } = props;
+const EndDeckCard = (props) => {
+  const {
+    title, text, yesBtnText, noBtnText, onYesPress, onNoPress,
+  } = props;
   const { textStyle, buttonGroup, buttonStyle } = styles;
   return (
     <Card title={title}>
@@ -23,22 +25,22 @@ const EndDeckCard = props => {
         />
       </View>
     </Card>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
-    textStyle: {
-        textAlign: 'center',
-        marginBottom: 10,
-    },
-    buttonGroup: {
-      flexDirection: 'row',
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    buttonStyle: {
-      width: 130,
-    }
-})
+  textStyle: {
+    textAlign: 'center',
+    marginBottom: 10,
+  },
+  buttonGroup: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonStyle: {
+    width: 130,
+  },
+});
 
 export default EndDeckCard;

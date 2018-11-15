@@ -1,27 +1,32 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import {
+  View, Text, StyleSheet, TouchableWithoutFeedback,
+} from 'react-native';
+import { Actions } from 'react-native-router-flux';
 
 const TapListCounter = ({ count }) => {
-    const { container, text } = styles;
-    return (
-        <View style={container}>
-            <Text style={text}>Tap List: {count} Beers</Text>
-        </View>
-    )
-}
+  const { container, text } = styles;
+  return (
+    <TouchableWithoutFeedback onPress={() => Actions.taplist()}>
+      <View style={container}>
+        <Text style={text}>{`TAP LIST: ${count} BEERS`}</Text>
+      </View>
+    </TouchableWithoutFeedback>
+  );
+};
 
 const styles = StyleSheet.create({
-    container: {
-        height: 70,
-        backgroundColor: 'black',
-    },
-    text: {
-        fontSize: 22,
-        color: '#ffffff',
-        textAlign: 'center',
-        lineHeight: 70,
-        letterSpacing: 1,
-    }
-})
+  container: {
+    height: 60,
+    backgroundColor: 'black',
+  },
+  text: {
+    fontSize: 18,
+    color: '#ffffff',
+    textAlign: 'center',
+    lineHeight: 60,
+    letterSpacing: 2,
+  },
+});
 
 export default TapListCounter;

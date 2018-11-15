@@ -3,12 +3,13 @@ import { StyleSheet, Text } from 'react-native';
 import { Card } from 'react-native-elements';
 import BeerRating from './BeerRating';
 
-const DeckCard = ({item}) => {
-  const { id, name, genre, brewery, uri, description, rating } = item;
+const DeckCard = ({ item }) => {
   const {
-    container, textStyle, titleStyle, subtitleStyle, genreStyle
+    id, name, genre, brewery, uri, description, rating,
+  } = item;
+  const {
+    container, textStyle, titleStyle, subtitleStyle, genreStyle,
   } = styles;
-
 
   return (
     <Card
@@ -17,21 +18,21 @@ const DeckCard = ({item}) => {
       featuredTitleStyle={titleStyle}
       featuredSubtitle={brewery}
       featuredSubtitleStyle={subtitleStyle}
-      image={{ uri: uri }}
+      image={{ uri }}
       containerStyle={container}
     >
       <Text style={genreStyle}>{genre}</Text>
-      <Text style={textStyle}>
+      <Text numberOfLines={6} style={textStyle}>
         {description}
       </Text>
       <BeerRating rating={rating} style={{ marginTop: 15 }} />
     </Card>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
-    minHeight: 350,
+    minHeight: 355,
   },
   titleStyle: {
     fontSize: 25,
@@ -40,15 +41,15 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   textStyle: {
+    marginBottom: 10,
     textAlign: 'center',
-    marginBottom: 10
   },
   genreStyle: {
     textAlign: 'center',
     marginBottom: 10,
     fontSize: 16,
     fontWeight: '600',
-  }
-})
+  },
+});
 
 export default DeckCard;
