@@ -8,17 +8,17 @@ import {
 
 export const likedBeer = beer => ({
   type: LIKED_BEER,
-  payload: beer,
+  beer,
 });
 
 export const dislikedBeer = beer => ({
   type: DISLIKED_BEER,
-  payload: beer,
+  beer,
 });
 
 export const fetchTaplist = taplist => ({
   type: FETCH_TAPLIST_SUCCESS,
-  payload: taplist,
+  taplist,
 });
 
 export const resetTaplist = () => ({
@@ -27,5 +27,5 @@ export const resetTaplist = () => ({
 
 export const fetchBeerData = swipelist => ({
   type: FETCH_BEER_DATA,
-  payload: swipelist,
+  swipelist,
 });

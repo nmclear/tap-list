@@ -7,6 +7,7 @@ import { sceneChange } from './redux/actions';
 
 import BackBtn from './components/BackBtn';
 
+import AuthScreen from './screens/AuthScreen';
 import HomeScreen from './screens/HomeScreen';
 import SwipeScreen from './screens/SwipeScreen';
 import TapListScreen from './screens/TapListScreen';
@@ -18,14 +19,10 @@ const RouterComponent = (props) => {
     <Router navigationBarStyle={navBarStyle} titleStyle={titleStyle} navBarButtonColor="white">
       <Scene key="root" hideNavBar>
         <Scene key="main">
+          <Scene initial key="auth" component={AuthScreen} title="TAP LIST" />
+          <Scene key="home" component={HomeScreen} title="TAP LIST" />
           <Scene
             // initial
-            key="home"
-            component={HomeScreen}
-            title="Tap List"
-          />
-          <Scene
-            initial
             key="swipe"
             left={() => null}
             component={SwipeScreen}

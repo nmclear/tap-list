@@ -17,13 +17,13 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case FETCH_BEER_DATA:
-      return { ...state, beerData: [...state.beerData, action.payload] };
+      return { ...state, beerData: [...state.beerData, action.swipelist] };
     case LIKED_BEER:
-      return { ...state, taplist: [...state.taplist, action.payload] };
+      return { ...state, taplist: [...state.taplist, action.beer] };
     case DISLIKED_BEER:
-      return { ...state, drainlist: [...state.drainlist, action.payload] };
+      return { ...state, drainlist: [...state.drainlist, action.beer] };
     case FETCH_TAPLIST_SUCCESS:
-      return action.payload;
+      return action.taplist;
     case RESET_TAPLIST:
       return INITIAL_STATE;
     default:
