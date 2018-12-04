@@ -72,3 +72,5 @@ export default connect(
   mapStateToProps,
   { resetTaplist, updateSwipeIndex, resetSwipeIndex },
 )(SwipeContainer);
+
+// export default SwipeContainer;

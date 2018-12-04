@@ -7,6 +7,7 @@ const DeckCard = ({ item }) => {
   const {
     id, name, genre, brewery, uri, description, rating,
   } = item;
+  const breweryName = brewery.name;
   const {
     container, textStyle, titleStyle, subtitleStyle, genreStyle,
   } = styles;
@@ -16,7 +17,7 @@ const DeckCard = ({ item }) => {
       key={id}
       featuredTitle={name}
       featuredTitleStyle={titleStyle}
-      featuredSubtitle={brewery}
+      featuredSubtitle={breweryName}
       featuredSubtitleStyle={subtitleStyle}
       image={{ uri }}
       containerStyle={container}

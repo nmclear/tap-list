@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, View } from 'react-native';
+import { graphql } from 'react-apollo';
+import { StyleSheet, View, Text } from 'react-native';
 
-import { likedBeer, dislikedBeer, fetchBeerData } from '../redux/actions';
+import { likedBeer, dislikedBeer } from '../redux/actions';
+
+import GET_BEER_QUERY from '../graphql/queries/beer/get_all_beers';
 
 import SwipeHeader from '../components/SwipeHeader';
 import SwipeContainer from '../components/SwipeContainer';
@@ -18,13 +21,31 @@ class SwipeScreen extends Component {
   };
 
   render() {
-    const { beerData, taplist } = this.props;
+    const { taplist, data } = this.props;
+    const { beers, loading, error } = data;
     const { container } = styles;
+
+    if (loading) {
+      return (
+        <View>
+          <Text>Loading</Text>
+        </View>
+      );
+    }
+
+    if (error) {
+      return (
+        <View>
+          <Text>Error</Text>
+        </View>
+      );
+    }
+
     return (
       <View style={container}>
         <SwipeHeader />
         <SwipeContainer
-          data={beerData}
+          data={beers}
           onSwipeRight={this.handleLiked}
           onSwipeLeft={this.handleDisliked}
         />
@@ -48,5 +69,5 @@ const mapStateToProps = ({ beerlist }) => {
 
 export default connect(
   mapStateToProps,
-  { likedBeer, dislikedBeer, fetchBeerData },
-)(SwipeScreen);
+  { likedBeer, dislikedBeer },
+)(graphql(GET_BEER_QUERY)(SwipeScreen));

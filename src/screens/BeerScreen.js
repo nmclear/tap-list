@@ -8,8 +8,10 @@ import LearnMoreBtn from '../components/LearnMoreBtn';
 
 const BeerScreen = ({ beer }) => {
   const {
-    id, uri, name, genre, brewery, bio, description, rating, link,
+    id, uri, name, genre, brewery, description, rating, link,
   } = beer;
+  const breweryBio = brewery.bio;
+  const breweryName = brewery.name;
 
   const {
     container, textBox, descrStyle, headerStyle,
@@ -17,7 +19,7 @@ const BeerScreen = ({ beer }) => {
   return (
     <View style={container} key={id}>
       <View>
-        <BeerTile uri={uri} title={name} caption={brewery} />
+        <BeerTile uri={uri} title={name} caption={breweryName} />
       </View>
       <ScrollView>
         <View style={textBox}>
@@ -28,9 +30,9 @@ const BeerScreen = ({ beer }) => {
         <View style={textBox}>
           <Text style={headerStyle}>
             About
-            {brewery}
+            {breweryName}
           </Text>
-          <Text style={descrStyle}>{bio || 'No Bio Available'}</Text>
+          <Text style={descrStyle}>{breweryBio || 'No Bio Available'}</Text>
         </View>
       </ScrollView>
       <LearnMoreBtn name={name} link={link} />

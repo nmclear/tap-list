@@ -19,10 +19,10 @@ const RouterComponent = (props) => {
     <Router navigationBarStyle={navBarStyle} titleStyle={titleStyle} navBarButtonColor="white">
       <Scene key="root" hideNavBar>
         <Scene key="main">
-          <Scene initial key="auth" component={AuthScreen} title="TAP LIST" />
+          <Scene key="auth" component={AuthScreen} title="TAP LIST" />
           <Scene key="home" component={HomeScreen} title="TAP LIST" />
           <Scene
-            // initial
+            initial
             key="swipe"
             left={() => null}
             component={SwipeScreen}
@@ -69,3 +69,5 @@ export default connect(
   null,
   { sceneChange },
 )(RouterComponent);
+
+// export default RouterComponent;
