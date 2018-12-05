@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import ReduxThunk from 'redux-thunk';
 import { View, StatusBar, StyleSheet } from 'react-native';
+import { SERVER_ROUTE } from 'react-native-dotenv';
 
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
@@ -15,7 +16,8 @@ import AccountBar from './src/components/AccountBar';
 // import { defaults } from './src/apollo/defaults';
 // import resolvers from './src/apollo/resolvers';
 
-const GRAPHQL_ENDPOINT = 'http://localhost:3000/graphql';
+// const GRAPHQL_ENDPOINT = 'http://localhost:3000/graphql';
+const GRAPHQL_ENDPOINT = SERVER_ROUTE;
 
 // FOR LATER INTERGRATIONS FOR APOLLO LINK OVER REDUX
 // const typeDefs = `
@@ -41,6 +43,7 @@ class App extends React.Component {
 
     const client = new ApolloClient({
       uri: GRAPHQL_ENDPOINT,
+      // FOR LATER INTERGRATIONS FOR APOLLO LINK OVER REDUX
       // clientState: {
       //   defaults,
       //   resolvers: {},

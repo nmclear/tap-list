@@ -28,10 +28,7 @@ const BeerScreen = ({ beer }) => {
         </View>
         <BeerRating rating={rating} />
         <View style={textBox}>
-          <Text style={headerStyle}>
-            About
-            {breweryName}
-          </Text>
+          <Text style={headerStyle}>{`About ${breweryName}`}</Text>
           <Text style={descrStyle}>{breweryBio || 'No Bio Available'}</Text>
         </View>
       </ScrollView>

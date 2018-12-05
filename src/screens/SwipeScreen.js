@@ -10,6 +10,7 @@ import GET_BEER_QUERY from '../graphql/queries/beer/get_all_beers';
 import SwipeHeader from '../components/SwipeHeader';
 import SwipeContainer from '../components/SwipeContainer';
 import TapListCounter from '../components/TapListCounter';
+import Loading from '../components/Loading';
 
 class SwipeScreen extends Component {
   handleLiked = (item) => {
@@ -26,11 +27,7 @@ class SwipeScreen extends Component {
     const { container } = styles;
 
     if (loading) {
-      return (
-        <View>
-          <Text>Loading</Text>
-        </View>
-      );
+      return <Loading />;
     }
 
     if (error) {
