@@ -13,6 +13,8 @@
     "apollo-link-state": "^0.4.2",
     "axios": "^0.18.0",
     "expo": "^30.0.1",
+    "firebase": "^5.6.0",
+    "firebase-admin": "^6.3.0",
     "graphql": "^14.0.2",
     "graphql-tag": "^2.10.0",
     "lodash": "^4.17.11",

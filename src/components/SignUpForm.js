@@ -3,6 +3,9 @@ import { View, Text, StyleSheet } from 'react-native';
 import {
   FormLabel, FormInput, FormValidationMessage, Button, Icon,
 } from 'react-native-elements';
+import axios from 'axios';
+
+const ROOT_URL = 'http://localhost:3000';
 
 class SignUpForm extends Component {
   state = {
@@ -11,7 +14,26 @@ class SignUpForm extends Component {
     submitLoading: false,
   };
 
-  handleSubmit = () => {};
+  handleSubmit = async () => {
+    this.onLoading();
+    const { phone } = this.state;
+    try {
+      await axios.post(`${ROOT_URL}/createUser`, { phone });
+      this.setState({ submitLoading: false });
+      // await axios.post(`${ROOT_URL}/requestOneTimePassword`, { phone });
+    } catch (err) {
+      this.setState({
+        errorMessage: 'Something went wrong. Please try again.',
+        phone: '',
+        submitLoading: false,
+      });
+    }
+  };
+
+  onLoading = () => this.setState({
+    submitLoading: true,
+    errorMessage: '',
+  });
 
   render() {
     const { phone, errorMessage, submitLoading } = this.state;

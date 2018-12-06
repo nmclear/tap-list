@@ -16,8 +16,8 @@ import AccountBar from './src/components/AccountBar';
 // import { defaults } from './src/apollo/defaults';
 // import resolvers from './src/apollo/resolvers';
 
-// const GRAPHQL_ENDPOINT = 'http://localhost:3000/graphql';
-const GRAPHQL_ENDPOINT = SERVER_ROUTE;
+const GRAPHQL_ENDPOINT = 'http://localhost:3000/graphql';
+// const GRAPHQL_ENDPOINT = SERVER_ROUTE;
 
 // FOR LATER INTERGRATIONS FOR APOLLO LINK OVER REDUX
 // const typeDefs = `

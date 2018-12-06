@@ -27,7 +27,7 @@ class SwipeScreen extends Component {
     const { container } = styles;
 
     if (loading) {
-      return <Loading />;
+      return <Loading label="Changing Keg..." />;
     }
 
     if (error) {
