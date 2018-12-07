@@ -2,75 +2,32 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import ReduxThunk from 'redux-thunk';
-import { View, StatusBar, StyleSheet } from 'react-native';
-import { SERVER_ROUTE } from 'react-native-dotenv';
+import { LAMBDA_SERVER_ROUTE } from 'react-native-dotenv';
 
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 
 import reducers from './src/redux/reducers';
-import Router from './src/Router';
-import AccountBar from './src/components/AccountBar';
 
-// FOR LATER INTERGRATIONS FOR APOLLO LINK OVER REDUX
-// import { defaults } from './src/apollo/defaults';
-// import resolvers from './src/apollo/resolvers';
+import ClientApp from './src/ClientApp';
 
 const GRAPHQL_ENDPOINT = 'http://localhost:3000/graphql';
-// const GRAPHQL_ENDPOINT = SERVER_ROUTE;
+// const GRAPHQL_ENDPOINT = LAMBDA_SERVER_ROUTE;
 
-// FOR LATER INTERGRATIONS FOR APOLLO LINK OVER REDUX
-// const typeDefs = `
-//   type BeerData {
-//     id: Int!
-//     name: String!
-//     brewery: String!
-//     genre: String!,
-//     link: String!,
-//     bio: String!,
-//     rating: Int!
-//     description: String!,
-//     uri: String!
-//   }
-// `;
+const App = () => {
+  const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
 
-class App extends React.Component {
-  state = {};
+  const client = new ApolloClient({
+    uri: GRAPHQL_ENDPOINT,
+  });
 
-  render() {
-    const { container } = styles;
-    const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
-
-    const client = new ApolloClient({
-      uri: GRAPHQL_ENDPOINT,
-      // FOR LATER INTERGRATIONS FOR APOLLO LINK OVER REDUX
-      // clientState: {
-      //   defaults,
-      //   resolvers: {},
-      //   typeDefs,
-      // },
-    });
-
-    return (
-      <ApolloProvider client={client}>
-        <Provider store={store}>
-          <View style={container}>
-            <StatusBar barStyle="light-content" />
-            <Router />
-            <AccountBar />
-          </View>
-        </Provider>
-      </ApolloProvider>
-    );
-  }
-}
-
-const styles = StyleSheet.create({
-  container: {
-    padding: 0,
-    flex: 1,
-    flexDirection: 'column',
-  },
-});
+  return (
+    <ApolloProvider client={client}>
+      <Provider store={store}>
+        <ClientApp />
+      </Provider>
+    </ApolloProvider>
+  );
+};
 
 export default App;

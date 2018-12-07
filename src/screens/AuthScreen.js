@@ -1,34 +1,28 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   View, Text, StyleSheet, KeyboardAvoidingView,
 } from 'react-native';
+import { connect } from 'react-redux';
 import SignUpForm from '../components/SignUpForm';
 import SignInForm from '../components/SignInForm';
 
-class AuthScreen extends Component {
-  // add authStage to redux
-  // also add phone number to redux after sign up
-  // so it automatically fills in on the sign in
-  state = { authStage: 'signUp' };
+const AuthScreen = (props) => {
+  const { container, formContainer } = styles;
+  const { authStage } = props;
 
-  render() {
-    const { container, formContainer } = styles;
-    const { authStage } = this.state;
+  const Form = authStage === 'SIGN_IN' ? <SignInForm /> : <SignUpForm />;
 
-    const Form = authStage === 'signIn' ? <SignInForm /> : <SignUpForm />;
-
-    return (
-      <View style={container}>
-        <View>
-          <Text>Hello from Auth Screen</Text>
-        </View>
-        <KeyboardAvoidingView style={formContainer} behavior="padding" enabled>
-          {Form}
-        </KeyboardAvoidingView>
+  return (
+    <View style={container}>
+      <View>
+        <Text>Auth Screen</Text>
       </View>
-    );
-  }
-}
+      <KeyboardAvoidingView style={formContainer} behavior="padding" enabled>
+        {Form}
+      </KeyboardAvoidingView>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -41,4 +35,12 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AuthScreen;
+const mapStateToProps = ({ auth }) => {
+  const { authStage } = auth;
+  return { authStage };
+};
+
+export default connect(
+  mapStateToProps,
+  {},
+)(AuthScreen);

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, View } from 'react-native';
-import { Scene, Router, Actions } from 'react-native-router-flux';
+import { StyleSheet } from 'react-native';
+import { Scene, Router } from 'react-native-router-flux';
 
 import { sceneChange } from './redux/actions';
 
@@ -15,14 +15,19 @@ import BeerScreen from './screens/BeerScreen';
 
 const RouterComponent = (props) => {
   const { navBarStyle, titleStyle } = styles;
+  const { currentUser } = props;
+
   return (
     <Router navigationBarStyle={navBarStyle} titleStyle={titleStyle} navBarButtonColor="white">
       <Scene key="root" hideNavBar>
-        <Scene key="main">
-          <Scene initial key="auth" component={AuthScreen} title="TAP LIST" />
+        <Scene initial={!currentUser} key="auth">
+          <Scene key="signup" component={AuthScreen} title="TAP LIST" />
+        </Scene>
+        <Scene initial={currentUser} key="main">
           <Scene key="home" component={HomeScreen} title="TAP LIST" />
+
           <Scene
-            // initial
+            initial
             key="swipe"
             left={() => null}
             component={SwipeScreen}
@@ -65,9 +70,12 @@ const styles = StyleSheet.create({
   },
 });
 
+const mapStateToProps = ({ auth }) => {
+  const { currentUser } = auth;
+  return { currentUser };
+};
+
 export default connect(
-  null,
+  mapStateToProps,
   { sceneChange },
 )(RouterComponent);
-
-// export default RouterComponent;

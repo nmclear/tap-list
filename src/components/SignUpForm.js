@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import {
-  FormLabel, FormInput, FormValidationMessage, Button, Icon,
+  FormInput, FormValidationMessage, Button, Icon,
 } from 'react-native-elements';
-import axios from 'axios';
-
-const ROOT_URL = 'http://localhost:3000';
+import { connect } from 'react-redux';
+import { signUpWithPhone } from '../redux/actions';
 
 class SignUpForm extends Component {
   state = {
@@ -15,24 +14,24 @@ class SignUpForm extends Component {
   };
 
   handleSubmit = async () => {
-    this.onLoading();
     const { phone } = this.state;
     try {
-      await axios.post(`${ROOT_URL}/createUser`, { phone });
-      this.setState({ submitLoading: false });
-      // await axios.post(`${ROOT_URL}/requestOneTimePassword`, { phone });
-    } catch (err) {
-      this.setState({
-        errorMessage: 'Something went wrong. Please try again.',
-        phone: '',
-        submitLoading: false,
-      });
+      this.onLoading();
+      return this.props.signUpWithPhone(phone);
+    } catch (error) {
+      return this.onFailSignUp(error);
     }
   };
 
   onLoading = () => this.setState({
     submitLoading: true,
     errorMessage: '',
+  });
+
+  onFailSignUp = err => this.setState({
+    errorMessage: 'Something went wrong. Please try again.',
+    phone: '',
+    submitLoading: false,
   });
 
   render() {
@@ -119,4 +118,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignUpForm;
+export default connect(
+  null,
+  { signUpWithPhone },
+)(SignUpForm);

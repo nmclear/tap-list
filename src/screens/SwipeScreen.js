@@ -22,6 +22,8 @@ class SwipeScreen extends Component {
   };
 
   render() {
+    // data comes from graphql query
+    // later translate from redux to apollo internal state management
     const { taplist, data } = this.props;
     const { beers, loading, error } = data;
     const { container } = styles;
@@ -60,8 +62,8 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = ({ beerlist }) => {
-  const { beerData, taplist } = beerlist;
-  return { beerData, taplist };
+  const { taplist } = beerlist;
+  return { taplist };
 };
 
 export default connect(

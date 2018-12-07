@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import {
-  FormLabel, FormInput, FormValidationMessage, Button, Icon,
+  FormInput, FormValidationMessage, Button, Icon,
 } from 'react-native-elements';
 
-import firebase from 'firebase';
-import axios from 'axios';
-
-const ROOT_URL = 'https://us-central1-one-time-password-ed371.cloudfunctions.net';
+import { connect } from 'react-redux';
+import { signInWithPhoneAndCode } from '../redux/actions';
 
 class SignInForm extends Component {
   state = {
@@ -19,11 +17,15 @@ class SignInForm extends Component {
 
   handleSubmit = async () => {
     const { phone, code } = this.state;
+    this.setState({ submitLoading: true });
     try {
-      const { data } = await axios.post(`${ROOT_URL}/verifyOneTimePassword`, { phone, code });
-      firebase.auth().signInWithCustomToken(data.token);
+      return this.props.signInWithPhoneAndCode(phone, code);
     } catch (err) {
-      this.setState({ errorMessage: 'Something went wrong. Please try again.' });
+      this.setState({
+        submitLoading: false,
+        errorMessage: 'Something went wrong. Please try again.',
+      });
+      return err;
     }
   };
 
@@ -126,4 +128,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignInForm;
+export default connect(
+  null,
+  { signInWithPhoneAndCode },
+)(SignInForm);
