@@ -4,7 +4,7 @@ import {
   FormInput, FormValidationMessage, Button, Icon,
 } from 'react-native-elements';
 import { connect } from 'react-redux';
-import { signUpWithPhone } from '../redux/actions';
+import { signUpWithPhone } from '../../redux/actions';
 
 class SignUpForm extends Component {
   state = {

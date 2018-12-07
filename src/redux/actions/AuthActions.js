@@ -7,6 +7,7 @@ import {
   AUTH_SIGN_UP_SUCCESS,
   AUTH_SIGN_IN_SUCCESS,
   AUTH_SIGN_IN_ERROR,
+  AUTH_SIGN_UP_ERROR,
   AUTH_ERROR,
 } from '../types';
 
@@ -21,7 +22,7 @@ export const signUpWithPhone = phone => async (dispatch) => {
   };
   const onError = () => {
     dispatch({
-      type: AUTH_ERROR,
+      type: AUTH_SIGN_UP_ERROR,
       authStage: 'SIGN_UP',
     });
   };

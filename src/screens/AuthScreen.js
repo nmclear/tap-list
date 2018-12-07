@@ -3,8 +3,8 @@ import {
   View, Text, StyleSheet, KeyboardAvoidingView,
 } from 'react-native';
 import { connect } from 'react-redux';
-import SignUpForm from '../components/SignUpForm';
-import SignInForm from '../components/SignInForm';
+import SignUpForm from '../components/Forms/SignUpForm';
+import SignInForm from '../components/Forms/SignInForm';
 
 const AuthScreen = (props) => {
   const { container, formContainer } = styles;

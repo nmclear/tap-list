@@ -5,7 +5,7 @@ import {
 } from 'react-native-elements';
 
 import { connect } from 'react-redux';
-import { signInWithPhoneAndCode } from '../redux/actions';
+import { signInWithPhoneAndCode } from '../../redux/actions';
 
 class SignInForm extends Component {
   state = {

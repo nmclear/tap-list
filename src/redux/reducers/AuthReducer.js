@@ -3,6 +3,7 @@ import {
   AUTH_SIGN_UP_SUCCESS,
   AUTH_SIGN_IN_SUCCESS,
   AUTH_SIGN_IN_ERROR,
+  AUTH_SIGN_UP_ERROR,
   AUTH_ERROR,
 } from '../types';
 
@@ -20,6 +21,8 @@ export default (state = INITIAL_STATE, action) => {
     case AUTH_SIGN_IN_SUCCESS:
       return { ...state, currentUser: action.currentUser };
     case AUTH_SIGN_IN_ERROR:
+      return { ...state, authStage: action.authStage };
+    case AUTH_SIGN_UP_ERROR:
       return { ...state, authStage: action.authStage };
     case AUTH_ERROR:
       return INITIAL_STATE;

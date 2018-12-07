@@ -1,5 +1,7 @@
 import React from 'react';
-import { View, StatusBar, StyleSheet } from 'react-native';
+import {
+  View, StatusBar, StyleSheet, AsyncStorage,
+} from 'react-native';
 
 import { connect } from 'react-redux';
 

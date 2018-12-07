@@ -9,9 +9,22 @@ import { resetTaplist, resetSwipeIndex } from '../redux/actions';
 import MiniCard from '../components/MiniCard';
 
 class TapListScreen extends Component {
-  renderItem = beer => (
-    <MiniCard item={beer.item} onPress={() => Actions.beer({ beer: beer.item })} />
-  );
+  renderItem = ({ item }) => {
+    const {
+      id, uri, name, brewery,
+    } = item;
+    const breweryName = brewery.name;
+    return (
+      <MiniCard
+        id={id}
+        item={item}
+        title={name}
+        subtitle={breweryName}
+        uri={uri}
+        onPress={() => Actions.beer({ beer: item })}
+      />
+    );
+  };
 
   resetSwipeList = () => {
     this.props.resetTaplist();
