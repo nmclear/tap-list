@@ -5,7 +5,7 @@ import { Scene, Router } from 'react-native-router-flux';
 
 import { sceneChange } from './redux/actions';
 
-import BackBtn from './components/BackBtn';
+import RouteBackBtn from './components/Buttons/RouteBackBtn';
 
 import AuthScreen from './screens/AuthScreen';
 import HomeScreen from './screens/HomeScreen';
@@ -38,14 +38,14 @@ const RouterComponent = (props) => {
             key="taplist"
             component={TapListScreen}
             title="MY TAP LIST"
-            renderBackButton={() => <BackBtn color="white" size={25} bgColor="#54C571" />}
+            renderBackButton={() => <RouteBackBtn />}
             on={() => props.sceneChange('taplist')}
           />
           <Scene
             key="beer"
             component={BeerScreen}
             title="ABOUT THE BEER"
-            renderBackButton={() => <BackBtn color="white" size={25} bgColor="#54C571" />}
+            renderBackButton={() => <RouteBackBtn />}
             on={() => props.sceneChange('beer')}
           />
         </Scene>

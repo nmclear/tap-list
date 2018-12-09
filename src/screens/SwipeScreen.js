@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { graphql } from 'react-apollo';
 import { StyleSheet, View, Text } from 'react-native';
+import PropTypes from 'prop-types';
 
 import { likedBeer, dislikedBeer } from '../redux/actions';
 
 import GET_BEER_QUERY from '../graphql/queries/beer/get_all_beers';
 
-import SwipeHeader from '../components/SwipeHeader';
-import SwipeContainer from '../components/SwipeContainer';
+import SwipeHeader from '../components/Swipe/SwipeHeader';
+import SwipeContainer from '../components/Swipe/SwipeContainer';
 import TapListCounter from '../components/TapListCounter';
 import Loading from '../components/Loading';
 
@@ -64,6 +65,12 @@ const styles = StyleSheet.create({
 const mapStateToProps = ({ beerlist }) => {
   const { taplist } = beerlist;
   return { taplist };
+};
+
+SwipeScreen.propTypes = {
+  taplist: PropTypes.arrayOf(PropTypes.object).isRequired,
+  likedBeer: PropTypes.func.isRequired,
+  dislikedBeer: PropTypes.func.isRequired,
 };
 
 export default connect(

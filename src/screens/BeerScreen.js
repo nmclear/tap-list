@@ -1,10 +1,10 @@
 import React from 'react';
 import {
-  ScrollView, View, Text, StyleSheet,
+  ScrollView, View, Text, StyleSheet, Linking,
 } from 'react-native';
 import BeerTile from '../components/BeerTile';
-import BeerRating from '../components/BeerRating';
-import LearnMoreBtn from '../components/LearnMoreBtn';
+import BeerRating from '../components/CustomRating';
+import LgBlackBtn from '../components/Buttons/LgBlackBtn';
 
 const BeerScreen = ({ beer }) => {
   const {
@@ -32,7 +32,7 @@ const BeerScreen = ({ beer }) => {
           <Text style={descrStyle}>{breweryBio || 'No Bio Available'}</Text>
         </View>
       </ScrollView>
-      <LearnMoreBtn name={name} link={link} />
+      <LgBlackBtn title="Learn More" onPress={() => Linking.openURL(link)} />
     </View>
   );
 };
