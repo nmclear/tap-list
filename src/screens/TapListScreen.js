@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import { Actions } from 'react-native-router-flux';
-import { connect } from 'react-redux';
-import { View, StyleSheet, FlatList } from 'react-native';
+import { graphql, compose } from 'react-apollo';
+import {
+  View, StyleSheet, FlatList, Text,
+} from 'react-native';
 import { Button } from 'react-native-elements';
 
-import { resetTaplist, resetSwipeIndex } from '../redux/actions';
+import resetTaplistMutation from '../graphql/mutations/server/reset_taplist';
+import resetSwipeIndexMutation from '../graphql/mutations/client/reset_swipe_index';
+import getTapListQuery from '../graphql/queries/server/user/get_user_taplist';
 
 import MiniCard from '../components/MiniCard';
 
@@ -27,22 +31,42 @@ class TapListScreen extends Component {
   };
 
   resetSwipeList = () => {
-    this.props.resetTaplist();
-    this.props.resetSwipeIndex();
+    const { resetSwipeIndex, resetTaplist } = this.props;
+    resetSwipeIndex();
+    const phone = '2314090332';
+    resetTaplist(phone);
     Actions.reset('swipe');
   };
 
   render() {
+    const { loading, error } = this.props;
+
+    if (error) {
+      return (
+        <View>
+          <Text>Error</Text>
+        </View>
+      );
+    }
+
+    if (loading) {
+      const list = <View />;
+    }
+
     const { taplist } = this.props;
 
     const { container, buttonContainer } = styles;
+
+    const list = (
+      <FlatList
+        data={taplist}
+        renderItem={this.renderItem}
+        keyExtractor={beer => beer.id.toString()}
+      />
+    );
     return (
       <View style={container}>
-        <FlatList
-          data={taplist}
-          renderItem={this.renderItem}
-          keyExtractor={beer => beer.id.toString()}
-        />
+        {list}
 
         <Button
           title="Reset"
@@ -70,12 +94,38 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = ({ beerlist }) => {
-  const { taplist } = beerlist;
-  return { taplist };
+const mapResultsToProps = ({ data }) => {
+  const { loading, error, user } = data;
+  if (loading) {
+    return { loading, error };
+  }
+  const { taplist } = user;
+  return { loading, error, taplist };
 };
 
-export default connect(
-  mapStateToProps,
-  { resetTaplist, resetSwipeIndex },
+const mutateProps = ({ mutate }) => {
+  const resetSwipeIndex = () => mutate({});
+  return { resetSwipeIndex };
+};
+
+const taplistProps = ({ mutate }) => {
+  const resetTaplist = phone => mutate({ variables: { phone } });
+  return { resetTaplist };
+};
+
+export default compose(
+  graphql(resetSwipeIndexMutation, {
+    props: mutateProps,
+  }),
+  graphql(resetTaplistMutation, {
+    props: taplistProps,
+  }),
+  graphql(getTapListQuery, {
+    options: () => ({
+      variables: { phone: '2314090332' },
+      fetchPolicy: 'cache-and-network',
+      partialRefetch: true,
+    }),
+    props: mapResultsToProps,
+  }),
 )(TapListScreen);

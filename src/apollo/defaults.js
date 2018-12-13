@@ -1,17 +1,9 @@
-import BeerData from '../data/tapListData';
-
-// export const defaults = {
-//   BeerData: {
-//     __typename: 'BeerData',
-//     id: 1,
-//     name: 'Test',
-//     brewery: 'Test Brewery',
-
-//     // value: beerData,
-//   },
-// };
-export const defaults = {
-  BeerData,
+export default {
+  // BeerData,
+  taplist: [],
+  drainlist: [],
+  activeKey: 'swipe',
+  authStage: 'SIGN_UP',
+  currentUser: false,
+  currentSwipeIndex: 0,
 };
-
-export const dog = [];

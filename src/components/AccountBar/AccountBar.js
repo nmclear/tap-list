@@ -1,25 +1,27 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { View, TouchableOpacity } from 'react-native';
 import { Icon } from 'react-native-elements';
+import { graphql } from 'react-apollo';
 import PropTypes from 'prop-types';
+import getActiveKey from '../../graphql/queries/client/get_active_key';
 import styles from './styles';
 
 class AccountBar extends Component {
-  viewSwipe = () => {
+  viewActiveTab = (active) => {
     const { activeKey } = this.props;
-    if (activeKey !== 'swipe') {
-      // Actions.reset('swipe');
-      Actions.swipe();
-    }
-  };
 
-  viewTapList = (taplist) => {
-    const { activeKey } = this.props;
-    if (activeKey !== 'taplist') {
-      Actions.taplist({ taplist });
+    if (activeKey !== active) {
+      switch (active) {
+        case 'swipe':
+          return Actions.swipe();
+        case 'taplist':
+          return Actions.taplist();
+        default:
+          return null;
+      }
     }
+    return null;
   };
 
   render() {
@@ -31,14 +33,14 @@ class AccountBar extends Component {
     return (
       <View style={container}>
         <View style={tabContainerStyle}>
-          <TouchableOpacity style={tabStyle} onPress={() => this.viewSwipe()}>
+          <TouchableOpacity style={tabStyle} onPress={() => this.viewActiveTab('swipe')}>
             <View style={activeKey === 'swipe' ? activeStyle : ''}>
               <Icon name="home" />
             </View>
           </TouchableOpacity>
         </View>
         <View style={tabContainerStyle}>
-          <TouchableOpacity style={tabStyle} onPress={() => this.viewTapList()}>
+          <TouchableOpacity style={tabStyle} onPress={() => this.viewActiveTab('taplist')}>
             <View style={activeKey === 'taplist' ? activeStyle : ''}>
               <Icon name="beer" type="material-community" />
             </View>
@@ -56,16 +58,10 @@ class AccountBar extends Component {
   }
 }
 
-const mapStateToProps = ({ scene }) => {
-  const { activeKey } = scene;
-  return { activeKey };
-};
-
 AccountBar.propTypes = {
-  activeKey: PropTypes.number.isRequired,
+  activeKey: PropTypes.string.isRequired,
 };
 
-export default connect(
-  mapStateToProps,
-  {},
-)(AccountBar);
+const mapResultsToProps = ({ data: { activeKey } }) => ({ activeKey });
+
+export default graphql(getActiveKey, { props: mapResultsToProps })(AccountBar);

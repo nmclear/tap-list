@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import {
+  View, Text, StyleSheet, TouchableOpacity,
+} from 'react-native';
 import { FormValidationMessage } from 'react-native-elements';
-import { connect } from 'react-redux';
-import { signUpWithPhone } from '../../../redux/actions';
+import { graphql } from 'react-apollo';
+
+import CREATE_USER_MUTATION from '../../../graphql/mutations/server/create_new_user';
+
 import SubmitButton from '../../Buttons/SubmitButton';
 import PhoneInput from '../Inputs/PhoneInput';
 
@@ -15,9 +19,11 @@ class SignUpForm extends Component {
 
   handleSubmit = async () => {
     const { phone } = this.state;
+    const { onCreateUserSubmit, onAuthStageChange } = this.props;
     try {
       this.onLoading();
-      return this.props.signUpWithPhone(phone);
+      await onCreateUserSubmit(phone);
+      return onAuthStageChange('SIGN_IN');
     } catch (error) {
       return this.onFailSignUp(error);
     }
@@ -37,6 +43,7 @@ class SignUpForm extends Component {
   render() {
     const { phone, errorMessage, submitLoading } = this.state;
     const { formContainer, headerStyle } = styles;
+    const { onAuthStageChange } = this.props;
 
     return (
       <View style={formContainer}>
@@ -47,6 +54,9 @@ class SignUpForm extends Component {
         </View>
         <PhoneInput phone={phone} onChangeText={phone => this.setState({ phone })} />
         <FormValidationMessage>{errorMessage}</FormValidationMessage>
+        <TouchableOpacity onPress={() => onAuthStageChange('SIGN_IN')}>
+          <Text style={{ textAlign: 'center' }}>Have code?</Text>
+        </TouchableOpacity>
 
         <SubmitButton
           title={submitLoading ? '' : 'GET CODE'}
@@ -74,7 +84,9 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(
-  null,
-  { signUpWithPhone },
-)(SignUpForm);
+const mapResultsToProps = ({ mutate }) => {
+  const onCreateUserSubmit = phone => mutate({ variables: { phone } });
+  return { onCreateUserSubmit };
+};
+
+export default graphql(CREATE_USER_MUTATION, { props: mapResultsToProps })(SignUpForm);

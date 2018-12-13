@@ -3,9 +3,9 @@ import {
   View, StatusBar, StyleSheet, AsyncStorage,
 } from 'react-native';
 
-import { connect } from 'react-redux';
-
-import { fetchCurrentUser } from './redux/actions';
+import { graphql, compose } from 'react-apollo';
+import SAVE_CURRENT_USER_MUTATION from './graphql/mutations/client/save_current_user';
+import CURRENT_USER_QUERY from './graphql/queries/client/get_current_user';
 import Router from './Router';
 import AccountBar from './components/AccountBar';
 
@@ -18,8 +18,13 @@ class ClientApp extends React.Component {
   };
 
   verifyUser = async () => {
+    const { saveCurrentUser } = this.props;
     try {
-      await this.props.fetchCurrentUser();
+      const user = await AsyncStorage.getItem('TAPLIST_AUTH_TOKEN');
+      if (user) {
+        await saveCurrentUser(user);
+      }
+
       return this.setState({ loading: false });
     } catch (error) {
       return this.setState({ loading: false });
@@ -28,7 +33,6 @@ class ClientApp extends React.Component {
 
   render() {
     const { container } = styles;
-
     const { loading } = this.state;
     const { currentUser } = this.props;
 
@@ -43,13 +47,13 @@ class ClientApp extends React.Component {
     return (
       <View style={container}>
         <StatusBar barStyle="light-content" />
-        <Router />
-        {currentUser && <AccountBar />}
+        <Router currentUser={currentUser} />
+        <AccountBar />
       </View>
     );
   }
 }
-
+// {currentUser && <AccountBar />}
 const styles = StyleSheet.create({
   container: {
     padding: 0,
@@ -59,12 +63,14 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = ({ auth }) => {
-  const { currentUser } = auth;
-  return { currentUser };
+const queryProps = ({ data: { currentUser } }) => ({ currentUser });
+
+const mutateProps = ({ mutate }) => {
+  const saveCurrentUser = currentUser => mutate({ variables: { currentUser } });
+  return { saveCurrentUser };
 };
 
-export default connect(
-  mapStateToProps,
-  { fetchCurrentUser },
+export default compose(
+  graphql(CURRENT_USER_QUERY, { props: queryProps }),
+  graphql(SAVE_CURRENT_USER_MUTATION, { props: mutateProps }),
 )(ClientApp);

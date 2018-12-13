@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { graphql } from 'react-apollo';
-import { StyleSheet, View, Text } from 'react-native';
+import { graphql, compose } from 'react-apollo';
+import {
+  StyleSheet, View, Text, AsyncStorage,
+} from 'react-native';
 import PropTypes from 'prop-types';
 
-import { likedBeer, dislikedBeer } from '../redux/actions';
-
-import GET_BEER_QUERY from '../graphql/queries/beer/get_all_beers';
+import GET_BEER_QUERY from '../graphql/queries/server/beer/get_all_beers';
+import ADD_BEER_TO_TAPLIST from '../graphql/mutations/server/add_beer_to_taplist';
 
 import SwipeHeader from '../components/Swipe/SwipeHeader';
 import SwipeContainer from '../components/Swipe/SwipeContainer';
@@ -14,18 +14,15 @@ import TapListCounter from '../components/TapListCounter';
 import Loading from '../components/Loading';
 
 class SwipeScreen extends Component {
-  handleLiked = (item) => {
-    this.props.likedBeer(item);
+  handleLiked = (beer) => {
+    const { addBeerToTaplist } = this.props;
+    return addBeerToTaplist(beer.id);
   };
 
-  handleDisliked = (item) => {
-    this.props.dislikedBeer(item);
-  };
+  handleDisliked = item => () => {};
 
   render() {
-    // data comes from graphql query
-    // later translate from redux to apollo internal state management
-    const { taplist, data } = this.props;
+    const { data } = this.props;
     const { beers, loading, error } = data;
     const { container } = styles;
 
@@ -41,6 +38,9 @@ class SwipeScreen extends Component {
       );
     }
 
+    // const { taplist } = this.props;
+    const taplist = [];
+
     return (
       <View style={container}>
         <SwipeHeader />
@@ -49,7 +49,7 @@ class SwipeScreen extends Component {
           onSwipeRight={this.handleLiked}
           onSwipeLeft={this.handleDisliked}
         />
-        <TapListCounter count={taplist.length || 0} />
+        <TapListCounter count={taplist ? taplist.length : 0} />
       </View>
     );
   }
@@ -62,18 +62,21 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = ({ beerlist }) => {
-  const { taplist } = beerlist;
-  return { taplist };
+// SwipeScreen.propTypes = {
+//   taplist: PropTypes.arrayOf(PropTypes.object).isRequired,
+//   handleLikedBeer: PropTypes.func.isRequired,
+//   handleDislikedBeer: PropTypes.func.isRequired,
+// };
+
+const mutateProps = ({ mutate }) => {
+  const phone = '2314090332';
+  const addBeerToTaplist = beer => mutate({ variables: { phone, beer } });
+  return { addBeerToTaplist };
 };
 
-SwipeScreen.propTypes = {
-  taplist: PropTypes.arrayOf(PropTypes.object).isRequired,
-  likedBeer: PropTypes.func.isRequired,
-  dislikedBeer: PropTypes.func.isRequired,
-};
-
-export default connect(
-  mapStateToProps,
-  { likedBeer, dislikedBeer },
-)(graphql(GET_BEER_QUERY)(SwipeScreen));
+export default compose(
+  graphql(GET_BEER_QUERY),
+  graphql(ADD_BEER_TO_TAPLIST, {
+    props: mutateProps,
+  }),
+)(SwipeScreen);

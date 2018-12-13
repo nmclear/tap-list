@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 
 import { View } from 'react-native';
 
+import { graphql, compose } from 'react-apollo';
+
 import { propTypes } from './propTypes';
 
-import { resetTaplist, updateSwipeIndex, resetSwipeIndex } from '../../../redux/actions';
+import resetTaplistMutation from '../../../graphql/mutations/server/reset_taplist';
+import RESET_SWIPE_INDEX from '../../../graphql/mutations/client/reset_swipe_index';
+import UPDATE_SWIPE_INDEX from '../../../graphql/mutations/client/update_current_swipe_index';
+import GET_SWIPE_INDEX from '../../../graphql/queries/client/get_current_swipe_index';
 
 import Deck from '../Deck';
 import DeckCard from '../DeckCard';
@@ -32,14 +36,22 @@ class SwipeContainer extends Component {
 
   // CHANGE TO PAGINATION
   resetSwipeList = () => {
-    this.props.resetTaplist();
-    this.props.resetSwipeIndex();
+    // this.props.resetTaplist();
+    const { resetSwipeIndex, resetTaplist } = this.props;
+    const phone = '2314090332';
+    resetTaplist(phone);
+    resetSwipeIndex();
     Actions.reset('swipe');
   };
 
   render() {
     const {
-      data, onSwipeRight, onSwipeLeft, currentSwipeIndex,
+      data,
+      onSwipeRight,
+      onSwipeLeft,
+      currentSwipeIndex,
+      updateSwipeIndex,
+      resetSwipeIndex,
     } = this.props;
 
     return (
@@ -51,22 +63,36 @@ class SwipeContainer extends Component {
           onSwipeRight={onSwipeRight}
           onSwipeLeft={onSwipeLeft}
           currentIndex={currentSwipeIndex}
-          updateCurrentIndex={this.props.updateSwipeIndex}
-          resetCurrentIndex={this.props.resetSwipeIndex}
+          updateCurrentIndex={updateSwipeIndex}
+          resetCurrentIndex={resetSwipeIndex}
         />
       </View>
     );
   }
 }
 
-const mapStateToProps = ({ deck }) => {
-  const { currentSwipeIndex } = deck;
-  return { currentSwipeIndex };
+// SwipeContainer.propTypes = propTypes;
+
+const mutateProps = ({ mutate }) => {
+  const updateSwipeIndex = currentSwipeIndex => mutate({ variables: { currentSwipeIndex } });
+  return { updateSwipeIndex };
 };
 
-SwipeContainer.propTypes = propTypes;
+const resetProps = ({ mutate }) => {
+  const resetSwipeIndex = () => mutate();
+  return { resetSwipeIndex };
+};
 
-export default connect(
-  mapStateToProps,
-  { resetTaplist, updateSwipeIndex, resetSwipeIndex },
+const taplistProps = ({ mutate }) => {
+  const resetTaplist = phone => mutate({ variables: { phone } });
+  return { resetTaplist };
+};
+
+const queryProps = ({ data: { currentSwipeIndex } }) => ({ currentSwipeIndex });
+
+export default compose(
+  graphql(RESET_SWIPE_INDEX, { props: resetProps }),
+  graphql(resetTaplistMutation, { props: taplistProps }),
+  graphql(UPDATE_SWIPE_INDEX, { props: mutateProps }),
+  graphql(GET_SWIPE_INDEX, { props: queryProps }),
 )(SwipeContainer);

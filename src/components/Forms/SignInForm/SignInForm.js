@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import {
+  View, Text, StyleSheet, TouchableOpacity,
+} from 'react-native';
 import { FormValidationMessage } from 'react-native-elements';
 
-import { connect } from 'react-redux';
-import { signInWithPhoneAndCode } from '../../../redux/actions';
+import { graphql, compose } from 'react-apollo';
+import AUTHORIZE_USER_MUTATION from '../../../graphql/mutations/server/authorize_new_user';
+import SAVE_CURRENT_USER_MUTATION from '../../../graphql/mutations/client/save_current_user';
+
 import SubmitButton from '../../Buttons/SubmitButton';
 import PhoneInput from '../Inputs/PhoneInput';
 import CodeInput from '../Inputs/CodeInput';
@@ -17,18 +21,30 @@ class SignInForm extends Component {
   };
 
   handleSubmit = async () => {
-    const { phone, code } = this.state;
+    const { phone } = this.state;
+    const code = parseInt(this.state.code, 10);
+    const { signInWithPhoneAndCode, saveCurrentUser, onAuthStageChange } = this.props;
     this.setState({ submitLoading: true });
     try {
-      return this.props.signInWithPhoneAndCode(phone, code);
+      this.onLoading();
+      await signInWithPhoneAndCode({ phone, code });
+      await saveCurrentUser(phone);
+      return onAuthStageChange('LOGGED_IN');
     } catch (err) {
-      this.setState({
-        submitLoading: false,
-        errorMessage: 'Something went wrong. Please try again.',
-      });
-      return err;
+      return this.onFailSignIn(err);
     }
   };
+
+  onLoading = () => this.setState({
+    submitLoading: true,
+    errorMessage: '',
+  });
+
+  onFailSignIn = err => this.setState({
+    errorMessage: 'Something went wrong. Please try again.',
+    code: '',
+    submitLoading: false,
+  });
 
   render() {
     const {
@@ -47,7 +63,9 @@ class SignInForm extends Component {
         <CodeInput code={code} onChangeText={code => this.setState({ code })} />
 
         <FormValidationMessage>{errorMessage}</FormValidationMessage>
-
+        <TouchableOpacity onPress={() => this.props.onAuthStageChange('SIGN_UP')}>
+          <Text style={{ textAlign: 'center' }}>No code?</Text>
+        </TouchableOpacity>
         <SubmitButton
           title={submitLoading ? '' : 'SUBMIT'}
           loading={submitLoading}
@@ -74,7 +92,17 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(
-  null,
-  { signInWithPhoneAndCode },
+const authProps = ({ mutate }) => {
+  const signInWithPhoneAndCode = ({ phone, code }) => mutate({ variables: { phone, code } });
+  return { signInWithPhoneAndCode };
+};
+
+const userProps = ({ mutate }) => {
+  const saveCurrentUser = currentUser => mutate({ variables: { currentUser } });
+  return { saveCurrentUser };
+};
+
+export default compose(
+  graphql(AUTHORIZE_USER_MUTATION, { props: authProps }),
+  graphql(SAVE_CURRENT_USER_MUTATION, { props: userProps }),
 )(SignInForm);

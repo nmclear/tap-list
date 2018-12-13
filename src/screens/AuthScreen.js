@@ -2,15 +2,21 @@ import React from 'react';
 import {
   View, Text, StyleSheet, KeyboardAvoidingView,
 } from 'react-native';
-import { connect } from 'react-redux';
+import { graphql, compose } from 'react-apollo';
+import getAuthStage from '../graphql/queries/client/get_auth_stage';
+import updateAuthStage from '../graphql/mutations/client/update_auth_stage';
 import SignUpForm from '../components/Forms/SignUpForm';
 import SignInForm from '../components/Forms/SignInForm';
 
 const AuthScreen = (props) => {
   const { container, formContainer } = styles;
-  const { authStage } = props;
+  const { authStage, onAuthStageChange } = props;
 
-  const Form = authStage === 'SIGN_IN' ? <SignInForm /> : <SignUpForm />;
+  const Form = authStage === 'SIGN_IN' ? (
+    <SignInForm onAuthStageChange={onAuthStageChange} />
+  ) : (
+    <SignUpForm onAuthStageChange={onAuthStageChange} />
+  );
 
   return (
     <View style={container}>
@@ -35,12 +41,13 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = ({ auth }) => {
-  const { authStage } = auth;
-  return { authStage };
+const queryProps = ({ data: { authStage } }) => ({ authStage });
+const mutateProps = ({ mutate }) => {
+  const onAuthStageChange = authStage => mutate({ variables: { authStage } });
+  return { onAuthStageChange };
 };
 
-export default connect(
-  mapStateToProps,
-  {},
+export default compose(
+  graphql(getAuthStage, { props: queryProps }),
+  graphql(updateAuthStage, { props: mutateProps }),
 )(AuthScreen);

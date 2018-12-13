@@ -1,10 +1,10 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { StyleSheet } from 'react-native';
 import { Scene, Router } from 'react-native-router-flux';
 
-import { sceneChange } from './redux/actions';
+import { graphql } from 'react-apollo';
 
+import updateActiveKey from './graphql/mutations/client/update_active_key';
 import RouteBackBtn from './components/Buttons/RouteBackBtn';
 
 import AuthScreen from './screens/AuthScreen';
@@ -13,10 +13,8 @@ import SwipeScreen from './screens/SwipeScreen';
 import TapListScreen from './screens/TapListScreen';
 import BeerScreen from './screens/BeerScreen';
 
-const RouterComponent = (props) => {
+const RouterComponent = ({ currentUser, onSceneChange }) => {
   const { navBarStyle, titleStyle } = styles;
-  const { currentUser } = props;
-
   return (
     <Router navigationBarStyle={navBarStyle} titleStyle={titleStyle} navBarButtonColor="white">
       <Scene key="root" hideNavBar>
@@ -32,21 +30,24 @@ const RouterComponent = (props) => {
             left={() => null}
             component={SwipeScreen}
             title="DESIGN YOUR TAP LIST"
-            on={() => props.sceneChange('swipe')}
+            // on={() => props.sceneChange('swipe')}
+            on={() => onSceneChange('swipe')}
           />
           <Scene
             key="taplist"
             component={TapListScreen}
             title="MY TAP LIST"
             renderBackButton={() => <RouteBackBtn />}
-            on={() => props.sceneChange('taplist')}
+            // on={() => props.sceneChange('taplist')}
+            on={() => onSceneChange('taplist')}
           />
           <Scene
             key="beer"
             component={BeerScreen}
             title="ABOUT THE BEER"
             renderBackButton={() => <RouteBackBtn />}
-            on={() => props.sceneChange('beer')}
+            // on={() => props.sceneChange('beer')}
+            on={() => onSceneChange('beer')}
           />
         </Scene>
       </Scene>
@@ -70,12 +71,9 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = ({ auth }) => {
-  const { currentUser } = auth;
-  return { currentUser };
+const mapResultsToProps = ({ mutate }) => {
+  const onSceneChange = activeKey => mutate({ variables: { activeKey } });
+  return { onSceneChange };
 };
 
-export default connect(
-  mapStateToProps,
-  { sceneChange },
-)(RouterComponent);
+export default graphql(updateActiveKey, { props: mapResultsToProps })(RouterComponent);
