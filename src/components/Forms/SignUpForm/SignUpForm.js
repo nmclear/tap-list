@@ -3,9 +3,8 @@ import {
   View, Text, StyleSheet, TouchableOpacity,
 } from 'react-native';
 import { FormValidationMessage } from 'react-native-elements';
-import { graphql } from 'react-apollo';
 
-import CREATE_USER_MUTATION from '../../../graphql/mutations/server/create_new_user';
+import createUserMutation from '../../../graphql/mutations/server/create_new_user';
 
 import SubmitButton from '../../Buttons/SubmitButton';
 import PhoneInput from '../Inputs/PhoneInput';
@@ -19,10 +18,10 @@ class SignUpForm extends Component {
 
   handleSubmit = async () => {
     const { phone } = this.state;
-    const { onCreateUserSubmit, onAuthStageChange } = this.props;
+    const { createNewUser, onAuthStageChange } = this.props;
     try {
       this.onLoading();
-      await onCreateUserSubmit(phone);
+      await createNewUser(phone);
       return onAuthStageChange('SIGN_IN');
     } catch (error) {
       return this.onFailSignUp(error);
@@ -84,9 +83,4 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapResultsToProps = ({ mutate }) => {
-  const onCreateUserSubmit = phone => mutate({ variables: { phone } });
-  return { onCreateUserSubmit };
-};
-
-export default graphql(CREATE_USER_MUTATION, { props: mapResultsToProps })(SignUpForm);
+export default createUserMutation(SignUpForm);

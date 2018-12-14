@@ -1,6 +1,7 @@
 import { gql } from 'apollo-boost';
+import { graphql } from 'react-apollo';
 
-export default gql`
+const mutation = gql`
   mutation resetTaplist($phone: ID) {
     resetTaplist(phone: $phone) {
       phone
@@ -11,3 +12,12 @@ export default gql`
     }
   }
 `;
+
+const props = ({ mutate }) => {
+  const resetTaplist = phone => mutate({ variables: { phone } });
+  return { resetTaplist };
+};
+
+export default graphql(mutation, { props });
+
+// export default mutation;

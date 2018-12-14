@@ -1,5 +1,4 @@
 export default {
-  // BeerData,
   taplist: [],
   drainlist: [],
   activeKey: 'swipe',

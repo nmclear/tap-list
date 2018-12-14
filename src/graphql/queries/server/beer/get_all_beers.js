@@ -1,6 +1,7 @@
 import { gql } from 'apollo-boost';
+import { graphql } from 'react-apollo';
 
-export default gql`
+const query = gql`
   {
     beers {
       id
@@ -18,3 +19,11 @@ export default gql`
     }
   }
 `;
+
+const props = ({ data }) => {
+  const { beers, loading, error } = data;
+  if (loading) return { loading, error };
+  return { beers, loading, error };
+};
+
+export default graphql(query, { props });

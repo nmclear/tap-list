@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { graphql, compose } from 'react-apollo';
+import { compose } from 'react-apollo';
 import {
   StyleSheet, View, Text, AsyncStorage,
 } from 'react-native';
 import PropTypes from 'prop-types';
 
-import GET_BEER_QUERY from '../graphql/queries/server/beer/get_all_beers';
-import ADD_BEER_TO_TAPLIST from '../graphql/mutations/server/add_beer_to_taplist';
+import getAllBeers from '../graphql/queries/server/beer/get_all_beers';
+import addBeerToTaplistMutation from '../graphql/mutations/server/add_beer_to_taplist';
 
 import SwipeHeader from '../components/Swipe/SwipeHeader';
 import SwipeContainer from '../components/Swipe/SwipeContainer';
@@ -22,8 +22,7 @@ class SwipeScreen extends Component {
   handleDisliked = item => () => {};
 
   render() {
-    const { data } = this.props;
-    const { beers, loading, error } = data;
+    const { beers, loading, error } = this.props;
     const { container } = styles;
 
     if (loading) {
@@ -68,15 +67,7 @@ const styles = StyleSheet.create({
 //   handleDislikedBeer: PropTypes.func.isRequired,
 // };
 
-const mutateProps = ({ mutate }) => {
-  const phone = '2314090332';
-  const addBeerToTaplist = beer => mutate({ variables: { phone, beer } });
-  return { addBeerToTaplist };
-};
-
 export default compose(
-  graphql(GET_BEER_QUERY),
-  graphql(ADD_BEER_TO_TAPLIST, {
-    props: mutateProps,
-  }),
+  getAllBeers,
+  addBeerToTaplistMutation,
 )(SwipeScreen);

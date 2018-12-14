@@ -4,9 +4,9 @@ import {
 } from 'react-native';
 import { FormValidationMessage } from 'react-native-elements';
 
-import { graphql, compose } from 'react-apollo';
-import AUTHORIZE_USER_MUTATION from '../../../graphql/mutations/server/authorize_new_user';
-import SAVE_CURRENT_USER_MUTATION from '../../../graphql/mutations/client/save_current_user';
+import { compose } from 'react-apollo';
+import authorizeUserMutation from '../../../graphql/mutations/server/authorize_new_user';
+import saveCurrentUserMutation from '../../../graphql/mutations/client/save_current_user';
 
 import SubmitButton from '../../Buttons/SubmitButton';
 import PhoneInput from '../Inputs/PhoneInput';
@@ -92,17 +92,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const authProps = ({ mutate }) => {
-  const signInWithPhoneAndCode = ({ phone, code }) => mutate({ variables: { phone, code } });
-  return { signInWithPhoneAndCode };
-};
-
-const userProps = ({ mutate }) => {
-  const saveCurrentUser = currentUser => mutate({ variables: { currentUser } });
-  return { saveCurrentUser };
-};
-
 export default compose(
-  graphql(AUTHORIZE_USER_MUTATION, { props: authProps }),
-  graphql(SAVE_CURRENT_USER_MUTATION, { props: userProps }),
+  authorizeUserMutation,
+  saveCurrentUserMutation,
 )(SignInForm);

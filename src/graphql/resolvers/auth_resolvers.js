@@ -11,14 +11,6 @@ const authResolvers = {
       return AsyncStorage.setItem('TAPLIST_AUTH_TOKEN', currentUser);
     },
   },
-  // Query: {
-  //   getAuthStage: (_, { authStage }) => ({ authStage }),
-  //   getCurrentUser: (_, { currentUser }) => {
-  //     const token = AsyncStorage.getItem('TAPLIST_AUTH_TOKEN');
-  //     if (currentUser === token) return { currentUser };
-  //     return false;
-  //   },
-  // },
 };
 
 export default authResolvers;

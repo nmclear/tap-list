@@ -1,6 +1,7 @@
 import { gql } from 'apollo-boost';
+import { graphql } from 'react-apollo';
 
-export default gql`
+const mutation = gql`
   mutation createUser($phone: ID) {
     createUser(phone: $phone) {
       phone
@@ -8,3 +9,10 @@ export default gql`
     }
   }
 `;
+
+const props = ({ mutate }) => {
+  const createNewUser = phone => mutate({ variables: { phone } });
+  return { createNewUser };
+};
+
+export default graphql(mutation, { props });

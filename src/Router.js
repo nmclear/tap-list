@@ -2,8 +2,6 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Scene, Router } from 'react-native-router-flux';
 
-import { graphql } from 'react-apollo';
-
 import updateActiveKey from './graphql/mutations/client/update_active_key';
 import RouteBackBtn from './components/Buttons/RouteBackBtn';
 
@@ -30,7 +28,6 @@ const RouterComponent = ({ currentUser, onSceneChange }) => {
             left={() => null}
             component={SwipeScreen}
             title="DESIGN YOUR TAP LIST"
-            // on={() => props.sceneChange('swipe')}
             on={() => onSceneChange('swipe')}
           />
           <Scene
@@ -38,7 +35,6 @@ const RouterComponent = ({ currentUser, onSceneChange }) => {
             component={TapListScreen}
             title="MY TAP LIST"
             renderBackButton={() => <RouteBackBtn />}
-            // on={() => props.sceneChange('taplist')}
             on={() => onSceneChange('taplist')}
           />
           <Scene
@@ -46,7 +42,6 @@ const RouterComponent = ({ currentUser, onSceneChange }) => {
             component={BeerScreen}
             title="ABOUT THE BEER"
             renderBackButton={() => <RouteBackBtn />}
-            // on={() => props.sceneChange('beer')}
             on={() => onSceneChange('beer')}
           />
         </Scene>
@@ -71,9 +66,4 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapResultsToProps = ({ mutate }) => {
-  const onSceneChange = activeKey => mutate({ variables: { activeKey } });
-  return { onSceneChange };
-};
-
-export default graphql(updateActiveKey, { props: mapResultsToProps })(RouterComponent);
+export default updateActiveKey(RouterComponent);

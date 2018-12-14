@@ -3,9 +3,9 @@ import {
   View, StatusBar, StyleSheet, AsyncStorage,
 } from 'react-native';
 
-import { graphql, compose } from 'react-apollo';
-import SAVE_CURRENT_USER_MUTATION from './graphql/mutations/client/save_current_user';
-import CURRENT_USER_QUERY from './graphql/queries/client/get_current_user';
+import { compose } from 'react-apollo';
+import saveCurrentUserMutation from './graphql/mutations/client/save_current_user';
+import currentUserQuery from './graphql/queries/client/get_current_user';
 import Router from './Router';
 import AccountBar from './components/AccountBar';
 
@@ -48,12 +48,12 @@ class ClientApp extends React.Component {
       <View style={container}>
         <StatusBar barStyle="light-content" />
         <Router currentUser={currentUser} />
-        <AccountBar />
+        {currentUser && <AccountBar />}
       </View>
     );
   }
 }
-// {currentUser && <AccountBar />}
+
 const styles = StyleSheet.create({
   container: {
     padding: 0,
@@ -63,14 +63,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const queryProps = ({ data: { currentUser } }) => ({ currentUser });
-
-const mutateProps = ({ mutate }) => {
-  const saveCurrentUser = currentUser => mutate({ variables: { currentUser } });
-  return { saveCurrentUser };
-};
-
 export default compose(
-  graphql(CURRENT_USER_QUERY, { props: queryProps }),
-  graphql(SAVE_CURRENT_USER_MUTATION, { props: mutateProps }),
+  currentUserQuery,
+  saveCurrentUserMutation,
 )(ClientApp);

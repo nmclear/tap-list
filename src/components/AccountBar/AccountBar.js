@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Actions } from 'react-native-router-flux';
 import { View, TouchableOpacity } from 'react-native';
 import { Icon } from 'react-native-elements';
-import { graphql } from 'react-apollo';
 import PropTypes from 'prop-types';
 import getActiveKey from '../../graphql/queries/client/get_active_key';
 import styles from './styles';
@@ -62,6 +61,4 @@ AccountBar.propTypes = {
   activeKey: PropTypes.string.isRequired,
 };
 
-const mapResultsToProps = ({ data: { activeKey } }) => ({ activeKey });
-
-export default graphql(getActiveKey, { props: mapResultsToProps })(AccountBar);
+export default getActiveKey(AccountBar);

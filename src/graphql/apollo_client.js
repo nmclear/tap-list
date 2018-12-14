@@ -1,7 +1,7 @@
 import ApolloClient, { InMemoryCache } from 'apollo-boost';
 import { LAMBDA_SERVER_ROUTE } from 'react-native-dotenv';
-import resolvers from '../apollo/resolvers';
-import defaults from '../apollo/defaults';
+import resolvers from './resolvers';
+import defaults from './defaults';
 
 const GRAPHQL_ENDPOINT = 'http://localhost:3000/graphql';
 // const GRAPHQL_ENDPOINT = LAMBDA_SERVER_ROUTE;

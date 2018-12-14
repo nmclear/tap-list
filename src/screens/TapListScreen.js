@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Actions } from 'react-native-router-flux';
-import { graphql, compose } from 'react-apollo';
+import { compose } from 'react-apollo';
 import {
   View, StyleSheet, FlatList, Text,
 } from 'react-native';
@@ -48,25 +48,21 @@ class TapListScreen extends Component {
         </View>
       );
     }
-
     if (loading) {
-      const list = <View />;
+      return <View />;
     }
 
     const { taplist } = this.props;
 
     const { container, buttonContainer } = styles;
 
-    const list = (
-      <FlatList
-        data={taplist}
-        renderItem={this.renderItem}
-        keyExtractor={beer => beer.id.toString()}
-      />
-    );
     return (
       <View style={container}>
-        {list}
+        <FlatList
+          data={taplist}
+          renderItem={this.renderItem}
+          keyExtractor={beer => beer.id.toString()}
+        />
 
         <Button
           title="Reset"
@@ -94,38 +90,8 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapResultsToProps = ({ data }) => {
-  const { loading, error, user } = data;
-  if (loading) {
-    return { loading, error };
-  }
-  const { taplist } = user;
-  return { loading, error, taplist };
-};
-
-const mutateProps = ({ mutate }) => {
-  const resetSwipeIndex = () => mutate({});
-  return { resetSwipeIndex };
-};
-
-const taplistProps = ({ mutate }) => {
-  const resetTaplist = phone => mutate({ variables: { phone } });
-  return { resetTaplist };
-};
-
 export default compose(
-  graphql(resetSwipeIndexMutation, {
-    props: mutateProps,
-  }),
-  graphql(resetTaplistMutation, {
-    props: taplistProps,
-  }),
-  graphql(getTapListQuery, {
-    options: () => ({
-      variables: { phone: '2314090332' },
-      fetchPolicy: 'cache-and-network',
-      partialRefetch: true,
-    }),
-    props: mapResultsToProps,
-  }),
+  resetSwipeIndexMutation,
+  resetTaplistMutation,
+  getTapListQuery,
 )(TapListScreen);

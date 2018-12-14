@@ -2,7 +2,7 @@ import React from 'react';
 import {
   View, Text, StyleSheet, KeyboardAvoidingView,
 } from 'react-native';
-import { graphql, compose } from 'react-apollo';
+import { compose } from 'react-apollo';
 import getAuthStage from '../graphql/queries/client/get_auth_stage';
 import updateAuthStage from '../graphql/mutations/client/update_auth_stage';
 import SignUpForm from '../components/Forms/SignUpForm';
@@ -41,13 +41,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const queryProps = ({ data: { authStage } }) => ({ authStage });
-const mutateProps = ({ mutate }) => {
-  const onAuthStageChange = authStage => mutate({ variables: { authStage } });
-  return { onAuthStageChange };
-};
-
 export default compose(
-  graphql(getAuthStage, { props: queryProps }),
-  graphql(updateAuthStage, { props: mutateProps }),
+  getAuthStage,
+  updateAuthStage,
 )(AuthScreen);
