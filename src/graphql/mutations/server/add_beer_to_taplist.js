@@ -1,5 +1,6 @@
 import { gql } from 'apollo-boost';
 import { graphql } from 'react-apollo';
+import { AsyncStorage } from 'react-native';
 
 const mutation = gql`
   mutation addBeerToTaplist($phone: ID, $beer: String) {
@@ -23,11 +24,21 @@ const mutation = gql`
   }
 `;
 
+const getUser = async () => {
+  try {
+    const user = await AsyncStorage.getItem('TAPLIST_AUTH_TOKEN');
+    return user;
+  } catch (error) {
+    return error;
+  }
+};
+
 const props = (results) => {
-  // console.log(results);
   const { mutate } = results;
-  // console.log(ownProps);
-  const phone = '2314090332';
+  let phone = '';
+  getUser().then((res) => {
+    phone = res;
+  });
   const addBeerToTaplist = beer => mutate({ variables: { phone, beer } });
   return { addBeerToTaplist };
 };

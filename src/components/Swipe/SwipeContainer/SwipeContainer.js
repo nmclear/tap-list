@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Actions } from 'react-native-router-flux';
 
-import { View } from 'react-native';
+import { View, AsyncStorage } from 'react-native';
 
 import { compose } from 'react-apollo';
 
@@ -20,28 +20,24 @@ class SwipeContainer extends Component {
   renderCard = item => <DeckCard item={item} />;
 
   renderNoMoreCards = () => (
-    <EndDeckCard
-      title="Tapped Keg..."
-      text="No more beers to taste!"
-      noBtnText="More Pints"
-      yesBtnText="View Tap List"
-      onNoPress={() => this.resetSwipeList()}
-      onYesPress={() => this.viewTapList()}
-    />
+    <EndDeckCard onNoPress={() => this.resetSwipeList()} onYesPress={() => this.viewTapList()} />
   );
 
   viewTapList = (taplist) => {
     Actions.taplist({ taplist });
   };
 
-  // CHANGE TO PAGINATION
-  resetSwipeList = () => {
-    // this.props.resetTaplist();
-    const { resetSwipeIndex, resetTaplist } = this.props;
-    const phone = '2314090332';
-    resetTaplist(phone);
-    resetSwipeIndex();
-    Actions.reset('swipe');
+  resetSwipeList = async () => {
+    const { resetSwipeIndex, resetTaplist, resetBeerCount } = this.props;
+    try {
+      const phone = await AsyncStorage.getItem('TAPLIST_AUTH_TOKEN');
+      resetTaplist(phone);
+      resetBeerCount();
+      resetSwipeIndex();
+      return Actions.reset('swipe');
+    } catch (error) {
+      return error;
+    }
   };
 
   render() {
@@ -71,7 +67,7 @@ class SwipeContainer extends Component {
   }
 }
 
-// SwipeContainer.propTypes = propTypes;
+SwipeContainer.propTypes = propTypes;
 
 export default compose(
   resetSwipeIndexMutation,

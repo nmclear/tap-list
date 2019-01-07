@@ -3,6 +3,6 @@ export default {
   drainlist: [],
   activeKey: 'swipe',
   authStage: 'SIGN_UP',
-  currentUser: false,
+  currentUser: '',
   currentSwipeIndex: 0,
 };

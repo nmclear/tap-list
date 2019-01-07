@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { Actions } from 'react-native-router-flux';
 import { compose } from 'react-apollo';
 import {
-  View, StyleSheet, FlatList, Text,
+  View, StyleSheet, FlatList, Text, Platform, AsyncStorage,
 } from 'react-native';
-import { Button } from 'react-native-elements';
+import { Button, Icon } from 'react-native-elements';
 
 import resetTaplistMutation from '../graphql/mutations/server/reset_taplist';
 import resetSwipeIndexMutation from '../graphql/mutations/client/reset_swipe_index';
@@ -30,12 +30,16 @@ class TapListScreen extends Component {
     );
   };
 
-  resetSwipeList = () => {
+  resetSwipeList = async () => {
     const { resetSwipeIndex, resetTaplist } = this.props;
-    resetSwipeIndex();
-    const phone = '2314090332';
-    resetTaplist(phone);
-    Actions.reset('swipe');
+    try {
+      const phone = await AsyncStorage.getItem('TAPLIST_AUTH_TOKEN');
+      resetTaplist(phone);
+      resetSwipeIndex();
+      return Actions.reset('swipe');
+    } catch (error) {
+      return error;
+    }
   };
 
   render() {
@@ -53,8 +57,29 @@ class TapListScreen extends Component {
     }
 
     const { taplist } = this.props;
+    const { container, buttonContainer, emptyText } = styles;
 
-    const { container, buttonContainer } = styles;
+    if (taplist.length === 0) {
+      return (
+        <View style={[container, { justifyContent: 'center', alignItems: 'center' }]}>
+          <View style={{ alignItems: 'center' }}>
+            <Text style={emptyText}>EMPTY KEG!</Text>
+          </View>
+
+          <View style={{ alignItems: 'center' }}>
+            <Icon
+              raised
+              name={Platform.OS === 'ios' ? 'ios-beer' : 'md-beer'}
+              type="ionicon"
+              color="black"
+              size={80}
+              onPress={() => Actions.reset('swipe')}
+            />
+            <Text style={emptyText}>FIND BEERS</Text>
+          </View>
+        </View>
+      );
+    }
 
     return (
       <View style={container}>
@@ -68,7 +93,8 @@ class TapListScreen extends Component {
           title="Reset"
           icon={{ name: 'home' }}
           backgroundColor="black"
-          onPress={() => this.resetSwipeList()}
+          // onPress={() => this.resetSwipeList()}
+          onPress={this.resetSwipeList}
           containerViewStyle={buttonContainer}
         />
       </View>
@@ -87,6 +113,12 @@ const styles = StyleSheet.create({
     width: '100%',
     marginLeft: 0,
     padding: 0,
+  },
+  emptyText: {
+    fontSize: 24,
+    marginTop: 10,
+    letterSpacing: 2,
+    fontWeight: 'bold',
   },
 });
 

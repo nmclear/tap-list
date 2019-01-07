@@ -22,8 +22,13 @@ const query = gql`
 
 const props = ({ data }) => {
   const { beers, loading, error } = data;
+
   if (loading) return { loading, error };
-  return { beers, loading, error };
+  return {
+    beers,
+    loading,
+    error,
+  };
 };
 
 export default graphql(query, { props });

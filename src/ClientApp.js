@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   View, StatusBar, StyleSheet, AsyncStorage,
 } from 'react-native';
@@ -9,7 +9,7 @@ import currentUserQuery from './graphql/queries/client/get_current_user';
 import Router from './Router';
 import AccountBar from './components/AccountBar';
 
-class ClientApp extends React.Component {
+class ClientApp extends Component {
   state = { loading: true };
 
   componentDidMount = () => {
@@ -48,7 +48,6 @@ class ClientApp extends React.Component {
       <View style={container}>
         <StatusBar barStyle="light-content" />
         <Router currentUser={currentUser} />
-        {currentUser && <AccountBar />}
       </View>
     );
   }

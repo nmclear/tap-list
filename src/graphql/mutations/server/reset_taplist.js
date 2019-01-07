@@ -15,9 +15,8 @@ const mutation = gql`
 
 const props = ({ mutate }) => {
   const resetTaplist = phone => mutate({ variables: { phone } });
+
   return { resetTaplist };
 };
 
 export default graphql(mutation, { props });
-
-// export default mutation;

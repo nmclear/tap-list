@@ -9,7 +9,7 @@ import SignUpForm from '../components/Forms/SignUpForm';
 import SignInForm from '../components/Forms/SignInForm';
 
 const AuthScreen = (props) => {
-  const { container, formContainer } = styles;
+  const { container, formContainer, headerStyle } = styles;
   const { authStage, onAuthStageChange } = props;
 
   const Form = authStage === 'SIGN_IN' ? (
@@ -20,9 +20,6 @@ const AuthScreen = (props) => {
 
   return (
     <View style={container}>
-      <View>
-        <Text>Auth Screen</Text>
-      </View>
       <KeyboardAvoidingView style={formContainer} behavior="padding" enabled>
         {Form}
       </KeyboardAvoidingView>
@@ -33,11 +30,17 @@ const AuthScreen = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-around',
   },
   formContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  headerStyle: {
+    fontSize: 30,
+    letterSpacing: 2,
   },
 });
 

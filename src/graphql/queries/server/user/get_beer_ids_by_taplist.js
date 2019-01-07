@@ -1,25 +1,12 @@
 import { gql } from 'apollo-boost';
 import { graphql } from 'react-apollo';
-
 import { AsyncStorage } from 'react-native';
 
 const query = gql`
-  query user($phone: ID!) {
+  query getBeerIdsByTaplist($phone: ID!) {
     user(phone: $phone) {
-      phone
       taplist {
         id
-        name
-        genre
-        description
-        rating
-        link
-        uri
-        brewery {
-          id
-          name
-          bio
-        }
       }
     }
   }
@@ -31,7 +18,9 @@ const props = ({ data }) => {
     return { loading, error };
   }
   const { taplist } = user;
-  return { loading, error, taplist };
+
+  const beerIds = taplist.map(beer => beer.id);
+  return { taplist: beerIds };
 };
 
 const getUser = async () => {
@@ -47,12 +36,6 @@ let user = '';
 getUser().then((res) => {
   user = res;
 });
-
-// const options = ({ initial }) => ({
-//   variables: { phone: initial },
-//   fetchPolicy: 'cache-and-network',
-//   partialRefetch: true,
-// });
 
 const options = ({ initial }) => {
   const phone = initial || user;

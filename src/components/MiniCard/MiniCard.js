@@ -13,7 +13,7 @@ const MiniCard = (props) => {
   return (
     <TouchableOpacity
       key={id}
-      style={[container, { backgroundColor: cardColor || 'white' }]}
+      style={[container, { backgroundColor: cardColor }]}
       onPress={onPress}
     >
       <Avatar large rounded source={{ uri }} activeOpacity={0.7} />
