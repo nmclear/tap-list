@@ -1,4 +1,4 @@
-# My Tap List
+# My TapList
 
 Swipe Right your favorite beers and create a _"tap list"_ to track your next brews! iOS and Android mobile application built with React Native.
 
@@ -8,6 +8,7 @@ Swipe Right your favorite beers and create a _"tap list"_ to track your next bre
 
 ## How It Works
 
+- Create account via one-time login with text authentication.
 - A random popular beer list is generated.
 - Users will be presented with cards showcasing each beer.
 - If a user wants to add a beer to their tap list, they swipe right (left to discard)
@@ -24,7 +25,12 @@ Swipe Right your favorite beers and create a _"tap list"_ to track your next bre
 ## Usage
 
 - https://expo.io/@nmclear/tap-list
-- Android has some bugs (fixing soon!)
+- Android has some visual/design bugs (fixing soon!)
+
+## Backend Server
+
+- Connected to serverless backend via graphql and AWS Lambda functions.
+- [Backend repo](https://github.com/nmclear/taplist_backend)
 
 ## Built with
 
@@ -34,13 +40,12 @@ Swipe Right your favorite beers and create a _"tap list"_ to track your next bre
 - React Native Router Flux - assists with screen navigation and eases communication between screens.
 - React Native Elements - cross platform toolkit for React Native components.
 - Redux - JavaScript state container or managing application state.
+- Apollo Boost - Apollo Client implentation to utilize GraphQL client side.
+- React Apollo - React integration of Apollo to fetch data from GraphQL server.
+- GraphQL - API query langauge and runtime to fulfill queries.
 
 ## To-do
 
-- Add user authentication with Facebook login.
-- Add database to save user's tap list.
-- Utilize GraphQL
-- Integrate AWS Lambda for serverless backend.
 - Expand amount of beers to review.
 - Improve animations.
 - Add a loading/landing screen.
